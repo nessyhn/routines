@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="obsidian">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Routines — Intelligent Personal Planner & AI Time Coach</title>
+  <meta name="description" content="Plan your time with calmness, optimize busy schedules, and manage habits with Google Gemini AI. An ultra-luxurious, open-source personal planner & calendar.">
+  <meta name="keywords" content="calendar, planner, routines, ai assistant, google gemini, time management, productivity, open source, obsidian, glassmorphism, flask, python">
+  <meta name="author" content="Nesibe Nur Seyhan">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://nessyhn.github.io/routines/">
+  <link rel="icon" type="image/svg+xml" href="https://raw.githubusercontent.com/nessyhn/routines/main/static/img/favicon.svg">
+
+  <!-- OpenGraph / Social Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nessyhn.github.io/routines/">
+  <meta property="og:title" content="Routines — Intelligent Personal Planner & AI Time Coach">
+  <meta property="og:description" content="Plan your time with calmness, optimize schedules, and manage habits with Google Gemini AI. Open-source personal planner.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/nessyhn/routines/main/static/img/og-preview.png?v=3">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Routines">
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nessyhn.github.io/routines/">
+  <meta name="twitter:title" content="Routines — Intelligent Personal Planner & AI Time Coach">
+  <meta name="twitter:description" content="Plan your time with calmness, optimize schedules, and manage habits with Google Gemini AI. Open-source personal planner.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/nessyhn/routines/main/static/img/og-preview.png?v=3">
+
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Routines",
+    "operatingSystem": "All",
+    "applicationCategory": "ProductivityApplication",
+    "description": "Intelligent Personal Planner, Calendar & AI Time Coach powered by Google Gemini AI.",
+    "url": "https://nessyhn.github.io/routines/",
+    "author": {
+      "@type": "Person",
+      "name": "Nesibe Nur Seyhan",
+      "url": "https://github.com/nessyhn"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 Pro CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+    :root {
+      --bg-dark: #080a0f;
+      --bg-card: #0d111a;
+      --bg-card-hover: #111622;
+      --accent-primary: #1e2638;
+      --text-primary: #ffffff;
+      --text-secondary: #8e9aa8;
+      --text-muted: #525d6b;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-glow: rgba(255, 255, 255, 0.12);
+      --glass-blur: blur(16px);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-pill: 9999px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: #080a0f;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(30, 41, 69, 0.35) 0%, transparent 60%),
+        radial-gradient(circle at 50% 100%, #06080d 0%, #080a0f 90%);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 1.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Navbar: Transparent, Edge-to-Edge with Subtle Bottom Line */
+    .navbar {
+      width: 100%;
+      padding: 1.25rem 3.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      position: relative;
+      top: 0;
+      z-index: 100;
+      box-sizing: border-box;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .brand-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #111724;
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 0.65rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Language Switcher */
+    .lang-switcher {
+      display: inline-flex;
+      align-items: center;
+      background: #0f131e;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      padding: 3px;
+      height: 40px;
+      box-sizing: border-box;
+      gap: 2px;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      height: 32px;
+      padding: 0 0.85rem;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.04em;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: #1e293b;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .lang-btn:hover:not(.active) {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* Action Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      height: 40px;
+      padding: 0 1.35rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+
+    .btn-primary {
+      background: #182030;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: #222c42;
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .btn-outline {
+      background: #0f131e;
+      color: #cbd5e1;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-outline:hover {
+      background: #161c2c;
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .btn-star {
+      background: #0f131e;
+      border: 1px solid var(--border-subtle);
+      color: #cbd5e1;
+    }
+
+    .btn-star:hover {
+      background: #161c2c;
+      border-color: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .btn-star i {
+      color: #fbbf24;
+      transition: transform 0.25s ease;
+    }
+
+    .btn-star:hover i {
+      transform: scale(1.2) rotate(15deg);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 5.5rem 0 3.5rem 0;
+      text-align: center;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.4rem 1.15rem;
+      border-radius: var(--radius-pill);
+      background: #0d111a;
+      border: 1px solid var(--border-subtle);
+      color: #cbd5e1;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .hero-pill i {
+      color: #94a3b8;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.18;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+    }
+
+    .hero-title span.glow-gradient {
+      color: #ffffff;
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 680px;
+      margin: 0 auto 2.5rem auto;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-cta .btn {
+      height: 46px;
+      padding: 0 1.65rem;
+      font-size: 0.925rem;
+    }
+
+    /* Terminal Clone Command Bar */
+    .clone-wrapper {
+      max-width: 660px;
+      width: 100%;
+      margin: 0 auto 4.5rem auto;
+      background: #0b0e17;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      box-sizing: border-box;
+    }
+
+    .clone-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.72rem, 1.8vw, 0.875rem);
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      overflow: hidden;
+      white-space: nowrap;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .clone-code::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    .clone-code i {
+      color: var(--text-muted);
+    }
+
+    .btn-copy {
+      background: #151b2a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      padding: 0.45rem 0.95rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-copy:hover {
+      background: #1e2638;
+      color: #fff;
+    }
+
+    /* UI Mockup Showcase Window */
+    .mockup-container {
+      max-width: 1060px;
+      margin: 0 auto 6rem auto;
+      position: relative;
+    }
+
+    .mockup-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: 60%;
+      background: radial-gradient(circle, rgba(30, 41, 69, 0.25) 0%, transparent 70%);
+      filter: blur(40px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .mockup-window {
+      position: relative;
+      z-index: 1;
+      background: #0b0f19;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+    }
+
+    .mockup-header {
+      padding: 0.65rem 1rem;
+      background: #080b13;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      height: 38px;
+      box-sizing: border-box;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .dot-red { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; flex-shrink: 0; }
+    .dot-yellow { width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; flex-shrink: 0; }
+    .dot-green { width: 10px; height: 10px; border-radius: 50%; background: #10b981; flex-shrink: 0; }
+
+    .window-title {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+      text-align: center;
+      padding-right: 36px;
+    }
+
+    .mockup-body {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 380px;
+    }
+
+    /* Mockup Sidebar */
+    .mock-sidebar {
+      background: #080c14;
+      border-right: 1px solid var(--border-subtle);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .mock-card {
+      background: #0d121e;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+    }
+
+    .mock-cal-header {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.65rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .mock-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .mock-mini-day {
+      padding: 4px 0;
+      border-radius: 4px;
+    }
+
+    .mock-mini-day.active {
+      background: #1e2638;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .mock-mini-day.has-event {
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .mock-ai-box {
+      background: #0d1322;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      font-size: 0.75rem;
+      line-height: 1.45;
+    }
+
+    .mock-ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-weight: 700;
+      color: #94a3b8;
+      margin-bottom: 0.4rem;
+    }
+
+    /* Mockup Main View */
+    .mock-main {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      background: #0b0f19;
+      overflow-y: auto;
+    }
+
+    .mock-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .mock-view-pills {
+      display: flex;
+      gap: 0.35rem;
+      background: #080c14;
+      padding: 3px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .mock-view-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.65rem;
+      border-radius: var(--radius-pill);
+      color: var(--text-secondary);
+    }
+
+    .mock-view-pill.active {
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* Timeline Day Cards */
+    .mock-day-card {
+      background: #0e1320;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .mock-day-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: #121828;
+    }
+
+    .mock-day-info {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 140px;
+    }
+
+    .mock-day-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: #111624;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+
+    .mock-day-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .mock-plans-row {
+      flex: 1;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .mock-plan-chip {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+    }
+
+    .chip-blue { background: #131d33; border: 1px solid var(--border-subtle); color: #cbd5e1; }
+    .chip-green { background: #0e241e; border: 1px solid rgba(16, 185, 129, 0.3); color: #6ee7b7; }
+    .chip-purple { background: #1d1533; border: 1px solid rgba(139, 92, 246, 0.3); color: #c4b5fd; }
+    .chip-amber { background: #261e0e; border: 1px solid rgba(245, 158, 11, 0.3); color: #fde68a; }
+
+    /* Bento Grid Section */
+    .section-head {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.65rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4.5vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 6rem;
+    }
+
+    .bento-card {
+      background: #0d111a;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bento-card:hover {
+      background: #121724;
+      border-color: rgba(255, 255, 255, 0.12);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .col-7 { grid-column: span 7; }
+    .col-5 { grid-column: span 5; }
+    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
+    .col-12 { grid-column: span 12; }
+
+    .bento-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #111726;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: #cbd5e1;
+      margin-bottom: 1.5rem;
+    }
+
+    .bento-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .bento-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .bento-visual {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* Live Stats Row */
+    .stats-section {
+      margin-bottom: 6rem;
+      background: #0a0e17;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 0 1rem;
+    }
+
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 3.5rem 0;
+      text-align: center;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .footer-dev-text {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-weight: 500;
+      color: #cbd5e1;
+    }
+
+    .footer-dev-text a {
+      color: #cbd5e1;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .footer-dev-text a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    .heartbeat-icon {
+      color: #ef4444;
+      display: inline-block;
+      margin: 0 0.15rem;
+      animation: heartbeat 1.35s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      14% { transform: scale(1.35); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.35); }
+      70% { transform: scale(1); }
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 992px) {
+      .navbar {
+        padding: 1rem 1.75rem;
+      }
+      .mockup-body {
+        grid-template-columns: 1fr;
+      }
+      .mock-sidebar {
+        display: none;
+      }
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+      .col-7, .col-5, .col-4, .col-6, .col-12 {
+        grid-column: span 1;
+      }
+      .stats-section {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      html, body {
+        overflow-x: hidden;
+        width: 100%;
+      }
+      .container {
+        padding: 0 1rem;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+      }
+      .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .brand {
+        gap: 0.45rem;
+      }
+      .brand-badge {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+        border-radius: 7px;
+      }
+      .brand-name {
+        font-size: 1.05rem;
+      }
+      .nav-actions {
+        justify-content: flex-end;
+        width: auto;
+        gap: 0.3rem;
+      }
+      .lang-switcher {
+        height: 28px;
+        padding: 2px;
+      }
+      .lang-btn {
+        height: 22px;
+        padding: 0 0.45rem;
+        font-size: 0.68rem;
+      }
+      .navbar .btn {
+        height: 28px;
+        padding: 0 0.55rem;
+        font-size: 0.7rem;
+        gap: 0.25rem;
+      }
+      .hero {
+        padding: 2.25rem 0 1.75rem 0;
+      }
+      .hero-pill {
+        font-size: 0.72rem;
+        padding: 0.35rem 0.75rem;
+        max-width: 100%;
+        line-height: 1.35;
+        box-sizing: border-box;
+      }
+      .hero-title {
+        font-size: 1.75rem;
+        line-height: 1.22;
+        margin-bottom: 1rem;
+      }
+      .hero-desc {
+        font-size: 0.92rem;
+        line-height: 1.55;
+        margin-bottom: 1.75rem;
+        padding: 0;
+      }
+      .hero-cta {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.65rem;
+        margin-bottom: 2rem;
+      }
+      .hero-cta .btn {
+        width: 100%;
+        height: 42px;
+        font-size: 0.85rem;
+      }
+      .clone-wrapper {
+        padding: 0.65rem 0.85rem;
+        gap: 0.5rem;
+        flex-direction: column;
+        align-items: stretch;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      .clone-code {
+        font-size: 0.7rem;
+        justify-content: center;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .btn-copy {
+        width: 100%;
+        justify-content: center;
+        height: 34px;
+        font-size: 0.75rem;
+      }
+
+      /* Mockup Window Mobile Responsiveness - Zero Overflow */
+      .mockup-container {
+        margin: 0 auto 3rem auto;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      .mockup-window {
+        border-radius: 12px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .mockup-header {
+        padding: 0.5rem 0.75rem;
+        height: 34px;
+      }
+      .window-title {
+        font-size: 0.68rem;
+        padding-right: 28px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .mock-main {
+        padding: 0.75rem;
+      }
+      .mock-topbar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.35rem;
+        width: 100%;
+      }
+      .mock-view-pills {
+        padding: 2px;
+        gap: 2px;
+      }
+      .mock-view-pill {
+        font-size: 0.62rem;
+        padding: 0.15rem 0.4rem;
+      }
+      .mock-day-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.55rem;
+        padding: 0.65rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .mock-day-info {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 0.55rem;
+        min-width: auto;
+      }
+      .mock-day-badge {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+        border-radius: 6px;
+      }
+      .mock-plans-row {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        width: 100%;
+      }
+      .mock-plan-chip {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 0.3rem 0.55rem;
+        font-size: 0.7rem;
+        box-sizing: border-box;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Bento Cards Mobile */
+      .bento-card {
+        padding: 1.5rem 1.25rem;
+        box-sizing: border-box;
+      }
+      .stats-section {
+        grid-template-columns: 1fr;
+        padding: 1.75rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar {
+        padding: 0.5rem 0.65rem;
+      }
+      .navbar .btn-outline span {
+        display: none;
+      }
+      .navbar .btn-star span {
+        display: inline;
+      }
+      .window-title {
+        font-size: 0.65rem;
+      }
+      .mock-topbar span[data-i18n="mockTodayBadge"] {
+        font-size: 0.65rem !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <a href="https://github.com/nessyhn/routines" class="brand">
+      <div class="brand-badge">r.</div>
+      <span class="brand-name">Routines</span>
+    </a>
+    <div class="nav-actions">
+      <!-- Language Switcher (Pure Text EN / TR) -->
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="btnLangEn" onclick="setLanguage('en')" title="Switch to English">EN</button>
+        <button class="lang-btn" id="btnLangTr" onclick="setLanguage('tr')" title="Türkçe'ye Geç">TR</button>
+      </div>
+
+      <a href="https://github.com/nessyhn/routines" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-github"></i>
+        <span>GitHub</span>
+      </a>
+
+      <a href="https://github.com/nessyhn/routines/stargazers" class="btn btn-star" target="_blank" rel="noopener noreferrer" title="Star Routines on GitHub" id="navStarLink">
+        <i class="fa-solid fa-star"></i>
+        <span data-i18n="navStar">Star on GitHub</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-pill">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <span data-i18n="heroPill">Google Gemini 2.5 AI Powered Open-Source Planner</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="glow-gradient" data-i18n="heroTitle1">Plan your time with calmness,</span><br>
+        <span class="glow-gradient" data-i18n="heroTitle2">organize habits with AI coach.</span>
+      </h1>
+
+      <p class="hero-desc" data-i18n="heroDesc">
+        Four dynamic calendar views, automated Gemini day optimization, personalized astrological motivation, multi-channel sound reminders, and pristine Obsidian glass aesthetics.
+      </p>
+
+      <div class="hero-cta">
+        <a href="https://github.com/nessyhn/routines/archive/refs/heads/main.zip" class="btn btn-primary" title="Download ZIP">
+          <i class="fa-solid fa-cloud-arrow-down"></i>
+          <span data-i18n="heroCtaDownload">Download Source Code (ZIP)</span>
+        </a>
+        <a href="#features" class="btn btn-outline">
+          <i class="fa-solid fa-compass"></i>
+          <span data-i18n="heroCtaFeatures">Discover Features</span>
+        </a>
+      </div>
+
+      <!-- Quick Clone -->
+      <div class="clone-wrapper">
+        <div class="clone-code">
+          <i class="fa-solid fa-terminal"></i>
+          <span>git clone https://github.com/nessyhn/routines.git</span>
+        </div>
+        <button class="btn-copy" onclick="copyCloneCommand(this)">
+          <i class="fa-regular fa-copy"></i> <span data-i18n="btnCopy">Copy</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Floating Live Glass UI Mockup Showcase -->
+    <section class="mockup-container">
+      <div class="mockup-glow"></div>
+      <div class="mockup-window">
+        <div class="mockup-header">
+          <div class="window-dots">
+            <span class="dot-red"></span>
+            <span class="dot-yellow"></span>
+            <span class="dot-green"></span>
+          </div>
+          <span class="window-title">routines.app</span>
+        </div>
+
+        <div class="mockup-body">
+          <!-- Sidebar -->
+          <div class="mock-sidebar">
+            <div class="mock-card">
+              <div class="mock-cal-header">
+                <span data-i18n="mockCalTitle">August 2026</span>
+                <i class="fa-regular fa-calendar" style="color: #cbd5e1;"></i>
+              </div>
+              <div class="mock-mini-grid">
+                <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+                <span>24</span><span>25</span><span>26</span><span class="mock-mini-day active">27</span><span class="mock-mini-day has-event">28</span><span>29</span><span>30</span>
+              </div>
+            </div>
+
+            <div class="mock-ai-box">
+              <div class="mock-ai-badge">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Gemini 2.5 Coach</span>
+              </div>
+              <p style="color: #cbd5e1;" data-i18n="mockAiText">"You have 3 back-to-back blocks this morning. I injected a 15-minute mindful breather at 11:30 to maximize peak focus."</p>
+            </div>
+          </div>
+
+          <!-- Main View -->
+          <div class="mock-main">
+            <div class="mock-topbar">
+              <div class="mock-view-pills">
+                <span class="mock-view-pill" data-i18n="pillMonth">Month</span>
+                <span class="mock-view-pill active" data-i18n="pillWeek">Week</span>
+                <span class="mock-view-pill" data-i18n="pillDay">Day</span>
+                <span class="mock-view-pill" data-i18n="pillYear">Year</span>
+              </div>
+              <span style="font-size: 0.78rem; font-weight: 700; color: #94a3b8;" data-i18n="mockTodayBadge">⚡ Today • Active Sync</span>
+            </div>
+
+            <!-- Day 1 Card -->
+            <div class="mock-day-card">
+              <div class="mock-day-info">
+                <div class="mock-day-badge">27</div>
+                <div>
+                  <div class="mock-day-name" data-i18n="mockDay1">Thursday</div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted);">Today</div>
+                </div>
+              </div>
+              <div class="mock-plans-row">
+                <span class="mock-plan-chip chip-blue"><i class="fa-solid fa-briefcase"></i> 09:00 Core Architecture</span>
+                <span class="mock-plan-chip chip-green"><i class="fa-solid fa-mug-hot"></i> 11:30 AI Breather Break</span>
+                <span class="mock-plan-chip chip-purple"><i class="fa-solid fa-dumbbell"></i> 18:00 Fitness & Run</span>
+              </div>
+            </div>
+
+            <!-- Day 2 Card -->
+            <div class="mock-day-card">
+              <div class="mock-day-info">
+                <div class="mock-day-badge" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); color: #cbd5e1;">28</div>
+                <div>
+                  <div class="mock-day-name" data-i18n="mockDay2">Friday</div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted);">Tomorrow</div>
+                </div>
+              </div>
+              <div class="mock-plans-row">
+                <span class="mock-plan-chip chip-amber"><i class="fa-solid fa-graduation-cap"></i> 10:00 English Research</span>
+                <span class="mock-plan-chip chip-blue"><i class="fa-solid fa-code"></i> 14:00 Release Routines v1.0</span>
+              </div>
+            </div>
+
+            <!-- Day 3 Card -->
+            <div class="mock-day-card">
+              <div class="mock-day-info">
+                <div class="mock-day-badge" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); color: #cbd5e1;">29</div>
+                <div>
+                  <div class="mock-day-name" data-i18n="mockDay3">Saturday</div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted);">Weekend</div>
+                </div>
+              </div>
+              <div class="mock-plans-row">
+                <span class="mock-plan-chip chip-purple"><i class="fa-solid fa-book-open"></i> 11:00 Mindfulness & Reading</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bento Grid Features Section -->
+    <section id="features">
+      <div class="section-head">
+        <div class="section-subtitle"><i class="fa-solid fa-sparkles"></i> <span data-i18n="featuresSubtitle">Capabilities & Design</span></div>
+        <h2 class="section-title" data-i18n="featuresTitle">Engineered for Focus and Serenity</h2>
+      </div>
+
+      <div class="bento-grid">
+        <!-- Bento 1: AI Coach (Wide 7-cols) -->
+        <div class="bento-card col-7">
+          <div class="bento-icon-box"><i class="fa-solid fa-robot"></i></div>
+          <h3 class="bento-title" data-i18n="bento1Title">Google Gemini 2.5 AI Time Coach</h3>
+          <p class="bento-desc" data-i18n="bento1Desc">An intelligent companion that understands your routines, resolves tight scheduling overlaps, suggests micro-breaks, and discusses habit systems.</p>
+          <div class="bento-visual">
+            <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+              <span class="mock-plan-chip chip-blue"><i class="fa-solid fa-bolt"></i> 1-Click Day Optimization</span>
+              <span class="mock-plan-chip chip-green"><i class="fa-solid fa-heart-pulse"></i> Burnout Prevention</span>
+              <span class="mock-plan-chip chip-purple"><i class="fa-solid fa-comments"></i> Conversational Assistant</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento 2: 4 Dynamic Calendar Views (5-cols) -->
+        <div class="bento-card col-5">
+          <div class="bento-icon-box"><i class="fa-regular fa-calendar-days"></i></div>
+          <h3 class="bento-title" data-i18n="bento2Title">4 Dynamic Calendar Views</h3>
+          <p class="bento-desc" data-i18n="bento2Desc">Seamlessly transition between Monthly Overview, spacious Weekly Cards, Hourly Daily Agenda, and 12-Month Year Matrix.</p>
+          <div class="bento-visual">
+            <span class="mock-plan-chip chip-amber"><i class="fa-solid fa-table-cells"></i> Month • Week • Day • Year</span>
+          </div>
+        </div>
+
+        <!-- Bento 3: Multi-Stage Audio Reminders (4-cols) -->
+        <div class="bento-card col-4">
+          <div class="bento-icon-box"><i class="fa-regular fa-bell"></i></div>
+          <h3 class="bento-title" data-i18n="bento3Title">Smart Audio Reminders</h3>
+          <p class="bento-desc" data-i18n="bento3Desc">Web Notification API paired with gentle audio chimes across tabs. 1-day, 1-hour, or 15-minute countdowns.</p>
+        </div>
+
+        <!-- Bento 4: Obsidian Glassmorphism (4-cols) -->
+        <div class="bento-card col-4">
+          <div class="bento-icon-box"><i class="fa-solid fa-palette"></i></div>
+          <h3 class="bento-title" data-i18n="bento4Title">Obsidian & Nordic Themes</h3>
+          <p class="bento-desc" data-i18n="bento4Desc">Switch effortlessly between deep velvet Obsidian dark glass and clean Scandinavian Nordic light mode.</p>
+        </div>
+
+        <!-- Bento 5: Astrological Inspiration & Privacy (4-cols) -->
+        <div class="bento-card col-4">
+          <div class="bento-icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3 class="bento-title" data-i18n="bento5Title">Privacy First & Astrology</h3>
+          <p class="bento-desc" data-i18n="bento5Desc">Zero tracking. PBKDF2 hashed security, local file storage, and personalized daily horoscope productivity insights.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Stats Metrics Section -->
+    <section class="stats-section">
+      <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label" data-i18n="stat1">Open Source & Free</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">Gemini 2.5</div>
+        <div class="stat-label" data-i18n="stat2">Google GenAI Powered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">4 Views</div>
+        <div class="stat-label" data-i18n="stat3">Month, Week, Day, Year</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">0 Lock-in</div>
+        <div class="stat-label" data-i18n="stat4">Private Local Storage</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer with Animated Beating Heart -->
+  <footer class="container footer">
+    <p class="footer-dev-text">
+      <span data-i18n="footDevPrefix">Developed with</span>
+      <i class="fa-solid fa-heart heartbeat-icon" aria-label="love"></i>
+      <span data-i18n="footDevBy">by</span>
+      <a href="https://github.com/nessyhn" target="_blank" rel="noopener noreferrer">Nesibe Nur Seyhan</a>
+    </p>
+  </footer>
+
+  <!-- Translation & Interactive Logic -->
+  <script>
+    const translations = {
+      en: {
+        pageTitle: "Routines — Intelligent Personal Planner & AI Time Coach",
+        navStar: "Star on GitHub",
+        navStarTitle: "Star Routines on GitHub",
+        heroPill: "Google Gemini 2.5 AI Powered Open-Source Planner",
+        heroTitle1: "Plan your time with calmness,",
+        heroTitle2: "organize habits with AI coach.",
+        heroDesc: "Four dynamic calendar views, automated Gemini day optimization, personalized astrological motivation, multi-channel sound reminders, and pristine Obsidian glass aesthetics.",
+        heroCtaDownload: "Download Source Code (ZIP)",
+        heroCtaFeatures: "Discover Features",
+        btnCopy: "Copy",
+        btnCopied: "Copied!",
+        mockCalTitle: "August 2026",
+        mockAiText: '"You have 3 back-to-back blocks this morning. I injected a 15-minute mindful breather at 11:30 to maximize peak focus."',
+        pillMonth: "Month",
+        pillWeek: "Week",
+        pillDay: "Day",
+        pillYear: "Year",
+        mockTodayBadge: "⚡ Today • Active Sync",
+        mockDay1: "Thursday",
+        mockDay2: "Friday",
+        mockDay3: "Saturday",
+        featuresSubtitle: "Capabilities & Design",
+        featuresTitle: "Engineered for Focus and Serenity",
+        bento1Title: "Google Gemini 2.5 AI Time Coach",
+        bento1Desc: "An intelligent companion that understands your routines, resolves tight scheduling overlaps, suggests micro-breaks, and discusses habit systems.",
+        bento2Title: "4 Dynamic Calendar Views",
+        bento2Desc: "Seamlessly transition between Monthly Overview, spacious Weekly Cards, Hourly Daily Agenda, and 12-Month Year Matrix.",
+        bento3Title: "Smart Audio Reminders",
+        bento3Desc: "Web Notification API paired with gentle audio chimes across tabs. 1-day, 1-hour, or 15-minute countdowns.",
+        bento4Title: "Obsidian & Nordic Themes",
+        bento4Desc: "Switch effortlessly between deep velvet Obsidian dark glass and clean Scandinavian Nordic light mode.",
+        bento5Title: "Privacy First & Astrology",
+        bento5Desc: "Zero tracking. PBKDF2 hashed security, local file storage, and personalized daily horoscope productivity insights.",
+        stat1: "Open Source & Free",
+        stat2: "Google GenAI Powered",
+        stat3: "Month, Week, Day, Year",
+        stat4: "Private Local Storage",
+        footDevPrefix: "Developed with",
+        footDevBy: "by"
+      },
+      tr: {
+        pageTitle: "Routines — Akıllı Kişisel Ajanda & AI Zaman Koçu",
+        navStar: "GitHub'da Yıldızla",
+        navStarTitle: "GitHub'da Routines projesine yıldız verin",
+        heroPill: "Google Gemini 2.5 AI Destekli Açık Kaynak Web Ajandası",
+        heroTitle1: "Zamanınızı sakinlikle planlayın,",
+        heroTitle2: "rutinlerinizi AI koç ile yönetin.",
+        heroDesc: "Dört dinamik takvim görünümü, otomatik Gemini gün optimizasyonu, kişiselleştirilmiş astrolojik motivasyon, çok kanallı sesli hatırlatıcılar ve kusursuz Obsidian cam estetiği.",
+        heroCtaDownload: "Kaynak Kodlarını İndir (ZIP)",
+        heroCtaFeatures: "Özellikleri Keşfet",
+        btnCopy: "Kopyala",
+        btnCopied: "Kopyalandı!",
+        mockCalTitle: "Ağustos 2026",
+        mockAiText: "Bu sabah ardı ardına 3 yoğun planınız var. En yüksek odaklanma için saat 11:30\'a 15 dakikalık zihinsel mola ekledim.",
+        pillMonth: "Ay",
+        pillWeek: "Hafta",
+        pillDay: "Gün",
+        pillYear: "Yıl",
+        mockTodayBadge: "⚡ Bugün • Canlı Senkron",
+        mockDay1: "Perşembe",
+        mockDay2: "Cuma",
+        mockDay3: "Cumartesi",
+        featuresSubtitle: "Yetenekler & Tasarım",
+        featuresTitle: "Odaklanma ve Dinginlik İçin Geliştirildi",
+        bento1Title: "Google Gemini 2.5 Destekli AI Koç",
+        bento1Desc: "Rutinlerinizi anlayan, yoğun günlerdeki çakışmaları gideren, dinlendirici molalar serpiştiren akıllı yapay zeka asistanı.",
+        bento2Title: "4 Farklı Takvim Görünümü",
+        bento2Desc: "Aylık Izgara, geniş ferah Haftalık Kartlar, saatlik Günlük Ajanda ve 12 Aylık Yıl Matrisi arasında pürüzsüz geçiş.",
+        bento3Title: "Akıllı Sesli Hatırlatıcılar",
+        bento3Desc: "Sekmeler arası çalışan Web Bildirim API'si ve sesli alarmlar. 1 gün, 1 saat veya 15 dakika öncesinden bildirimler.",
+        bento4Title: "Obsidian & Nordic Tema",
+        bento4Desc: "Göz yormayan ultra lüks koyu cam efekti ile ferah açık İskandinav teması arasında tek tıkla geçiş yapın.",
+        bento5Title: "Gizlilik & Burç Koçluğu",
+        bento5Desc: "PBKDF2 şifreleme, yerel dosya tabanlı mimari ve doğum tarihinize özel günlük astrolojik verimlilik koçluğu.",
+        stat1: "Açık Kaynak & Ücretsiz",
+        stat2: "Google GenAI 2.5 Motoru",
+        stat3: "Ay, Hafta, Gün, Yıl",
+        stat4: "Gizli Yerel Veri Depolama",
+        footDevPrefix: "Geliştiren:",
+        footDevBy: ""
+      }
+    };
+
+    let currentLang = localStorage.getItem('routines_landing_lang') || 'en';
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('routines_landing_lang', lang);
+      document.documentElement.lang = lang;
+
+      // Update button active state
+      document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
+      document.getElementById('btnLangTr').classList.toggle('active', lang === 'tr');
+
+      // Update texts
+      const dict = translations[lang];
+      document.title = dict.pageTitle;
+
+      const starLink = document.getElementById('navStarLink');
+      if (starLink) {
+        starLink.title = dict.navStarTitle;
+      }
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) {
+          el.textContent = dict[key];
+        }
+      });
+    }
+
+    function copyCloneCommand(btn) {
+      const textToCopy = 'git clone https://github.com/nessyhn/routines.git';
+      const dict = translations[currentLang] || translations.en;
+      
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          showCopySuccess(btn, dict);
+        }).catch(() => {
+          fallbackCopy(textToCopy, btn, dict);
+        });
+      } else {
+        fallbackCopy(textToCopy, btn, dict);
+      }
+    }
+
+    function fallbackCopy(text, btn, dict) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showCopySuccess(btn, dict);
+      } catch (err) {
+        console.error('Fallback copy failed', err);
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function showCopySuccess(btn, dict) {
+      btn.innerHTML = `<i class="fa-solid fa-check" style="color: #34d399;"></i> <span>${dict.btnCopied}</span>`;
+      setTimeout(() => {
+        btn.innerHTML = `<i class="fa-regular fa-copy"></i> <span>${dict.btnCopy}</span>`;
+      }, 2500);
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+      setLanguage(currentLang);
+    });
+  </script>
+
+</body>
+</html>

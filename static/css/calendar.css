@@ -1,0 +1,2177 @@
+/* =========================================================
+   CALENDAR ENGINE — MODERN GLASSMORPHIC MASTERPIECE
+   ========================================================= */
+
+.calendar-main-view {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: all var(--transition-normal);
+}
+
+.calendar-header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.45rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nav-date-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.nav-buttons .btn {
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+}
+
+/* Category Badges (Dark Mode Default) */
+.badge-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.cat-Genel { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.3); }
+.cat-Is, .cat-İş { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.35); }
+.cat-Saglik, .cat-Sağlık { background: rgba(52, 211, 153, 0.15); color: #6ee7b7; border: 1px solid rgba(52, 211, 153, 0.35); }
+.cat-Egitim, .cat-Eğitim { background: rgba(251, 191, 36, 0.15); color: #fde68a; border: 1px solid rgba(251, 191, 36, 0.35); }
+.cat-Kisisel, .cat-Kişisel { background: rgba(244, 114, 182, 0.15); color: #fbcfe8; border: 1px solid rgba(244, 114, 182, 0.35); }
+.cat-Rutin { background: rgba(167, 139, 250, 0.15); color: #c4b5fd; border: 1px solid rgba(167, 139, 250, 0.35); }
+
+/* ---------------------------------------------------------
+   1. MONTHLY VIEW (AYLIK TABLO)
+   --------------------------------------------------------- */
+.month-grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.month-days-header {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.month-days-header > div {
+  padding: 0.45rem 0.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--border-subtle);
+}
+
+.month-days-header > div:last-child {
+  border-right: none;
+}
+
+.month-days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  width: 100%;
+  flex: 1;
+  background: transparent;
+}
+
+.day-cell {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  min-height: 78px;
+  max-height: 98px;
+  padding: 0.45rem 0.55rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition: background var(--transition-fast);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.day-cell:nth-child(7n) {
+  border-right: none;
+}
+
+.day-cell:hover {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.day-cell.other-month {
+  opacity: 0.25;
+  background: rgba(0, 0, 0, 0.15);
+  cursor: default;
+}
+
+.day-cell.today {
+  background: rgba(67, 97, 238, 0.06);
+  box-shadow: inset 0 0 0 1.5px var(--accent-primary);
+}
+
+.day-number-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.day-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.day-cell.today .day-number {
+  color: var(--accent-primary);
+  font-weight: 800;
+}
+
+.day-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  overflow: hidden;
+}
+
+.event-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.18rem 0.4rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.7rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid transparent;
+  transition: transform var(--transition-fast);
+}
+
+.event-chip:hover {
+  transform: translateX(2px);
+}
+
+.chip-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  opacity: 0.8;
+}
+
+.chip-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.special-day-chip {
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.68rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.special-day-chip.national {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+}
+
+.special-day-chip.world {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #7dd3fc;
+}
+
+.special-day-chip.nature {
+  background: rgba(52, 211, 153, 0.12);
+  border-color: rgba(52, 211, 153, 0.35);
+  color: #6ee7b7;
+}
+
+.birthday-chip {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.22), rgba(168, 85, 247, 0.22));
+  border: 1px solid rgba(236, 72, 153, 0.55);
+  color: #fbcfe8;
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.725rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 0 14px rgba(236, 72, 153, 0.3);
+}
+
+/* Monthly Vertical List */
+.month-vertical-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.vertical-day-row {
+  display: flex;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.35rem;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all var(--transition-normal);
+}
+
+.vertical-day-row:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-surface-hover);
+}
+
+.vertical-date-badge {
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical-date-num {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.vertical-date-name {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.vertical-events-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  flex: 1;
+}
+
+/* ---------------------------------------------------------
+   2. WEEKLY VIEW (HAFTALIK — YATAY & DİKEY GENİŞ KARTLAR)
+   --------------------------------------------------------- */
+.week-grid-container {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+  flex: 1;
+}
+
+.week-column {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  padding: 0.85rem;
+  gap: 0.75rem;
+  min-height: 480px;
+  transition: all var(--transition-fast);
+}
+
+.week-column:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-surface-hover);
+}
+
+.week-column.is-today {
+  border-color: rgba(67, 97, 238, 0.5);
+  box-shadow: 0 0 15px rgba(67, 97, 238, 0.12);
+}
+
+.week-col-header {
+  text-align: center;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+}
+
+.week-col-day {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.week-col-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-top: 0.15rem;
+}
+
+.badge-today-mini {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--accent-primary);
+  color: #ffffff;
+  margin-top: 0.25rem;
+}
+
+.week-col-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem 0.5rem;
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-top: 0.5rem;
+}
+
+.week-col-empty:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+}
+
+.week-events-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+}
+
+/* HAFTALIK DİKEY / LİSTE GÖRÜNÜMÜ — GENİŞ & KUTULU DÜZEN */
+.week-timeline-vertical-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+.week-day-card {
+  display: grid;
+  grid-template-columns: 180px 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.35rem;
+  transition: all var(--transition-fast);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.week-day-card:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-surface-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.week-day-card.is-today {
+  border-color: rgba(67, 97, 238, 0.45);
+  background: linear-gradient(135deg, rgba(67, 97, 238, 0.06), var(--bg-surface));
+  box-shadow: 0 2px 14px rgba(67, 97, 238, 0.1);
+}
+
+.week-day-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.week-day-date-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.week-day-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.week-day-text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.week-day-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.week-day-month {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.badge-today-pill {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--accent-primary);
+  color: #ffffff;
+  box-shadow: 0 1px 4px var(--accent-glow);
+  white-space: nowrap;
+}
+
+.week-day-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.week-day-special-events {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.week-day-plans-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.week-day-plans-flow .plan-card {
+  min-width: 220px;
+  max-width: 340px;
+  margin: 0;
+}
+
+.week-day-empty-msg {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-tertiary);
+  font-size: 0.825rem;
+  cursor: pointer;
+  padding: 0.35rem 0;
+}
+
+.week-add-prompt {
+  color: var(--accent-primary);
+  font-weight: 600;
+  font-size: 0.78rem;
+  opacity: 0.85;
+  transition: opacity var(--transition-fast);
+}
+
+.week-day-empty-msg:hover .week-add-prompt {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.week-day-card-footer {
+  display: flex;
+  align-items: center;
+}
+
+.btn-quick-add-week {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-quick-add-week:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+[data-theme="nordic"] .week-day-card {
+  background: #ffffff;
+  border-color: rgba(100, 116, 139, 0.16);
+  box-shadow: 0 1px 4px rgba(100, 116, 139, 0.05);
+}
+
+[data-theme="nordic"] .week-day-card:hover {
+  background: #f8fafc;
+}
+
+[data-theme="nordic"] .btn-quick-add-week {
+  background: #f1f5f9;
+  border-color: rgba(100, 116, 139, 0.18);
+  color: #475569;
+}
+
+/* ---------------------------------------------------------
+   3. DAILY VIEW (GÜNLÜK AJANDA)
+   --------------------------------------------------------- */
+.day-agenda-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hourly-slot-row {
+  display: grid;
+  grid-template-columns: 85px 1fr;
+  border-top: 1px dashed var(--border-subtle);
+  padding: 0.95rem 0.85rem;
+  align-items: center;
+  gap: 1.25rem;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  position: relative;
+}
+
+.hourly-slot-row:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+}
+
+.hourly-slot-row::after {
+  content: "+ Plan Ekle";
+  position: absolute;
+  right: 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  opacity: 0;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  transform: translateX(-5px);
+  pointer-events: none;
+}
+
+.hourly-slot-row:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.hour-timestamp {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.slot-events-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ---------------------------------------------------------
+   4. PLAN CARD COMPONENT (Koyu & Açık Tema Uyumlu)
+   --------------------------------------------------------- */
+.plan-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.95rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  position: relative;
+  transition: all var(--transition-normal);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.plan-card:hover {
+  border-color: var(--border-medium);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
+}
+
+.plan-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.plan-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.plan-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.775rem;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+}
+
+.meta-time {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+
+.meta-reminder {
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.action-btn-del {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 0.25rem 0.4rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+}
+
+.action-btn-del:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* ---------------------------------------------------------
+   5. YEARLY VIEW (YILLIK)
+   --------------------------------------------------------- */
+.year-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem 1.75rem;
+  padding: 0.5rem;
+}
+
+.year-month-card {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.year-month-card:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--border-subtle);
+  transform: translateY(-2px);
+}
+
+.year-month-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.year-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.year-mini-header-cell {
+  font-size: 0.675rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  padding-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+
+.year-mini-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.725rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-secondary);
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.year-mini-cell.empty {
+  pointer-events: none;
+}
+
+.year-mini-cell:hover {
+  background: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+.year-mini-cell.is-birthday {
+  color: #f472b6;
+  font-weight: 800;
+  text-shadow: 0 0 8px rgba(244, 114, 182, 0.6);
+}
+
+.year-mini-cell.is-special {
+  color: #60a5fa;
+  font-weight: 700;
+}
+
+.year-mini-cell.has-plan {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.year-mini-cell.has-plan::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  width: 3.5px;
+  height: 3.5px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+}
+
+/* =========================================================
+   NORDIC (AÇIK TEMA) ÖZEL YUMUŞATMA STİLLERİ
+   ========================================================= */
+[data-theme="nordic"] .plan-card {
+  background: #ffffff;
+  border: 1px solid rgba(100, 116, 139, 0.16);
+  box-shadow: 0 2px 8px rgba(100, 116, 139, 0.06);
+}
+
+[data-theme="nordic"] .plan-card:hover {
+  border-color: rgba(100, 116, 139, 0.3);
+  box-shadow: 0 4px 14px rgba(100, 116, 139, 0.1);
+}
+
+[data-theme="nordic"] .plan-title {
+  color: #1e293b;
+}
+
+[data-theme="nordic"] .hourly-slot-row {
+  border-top-color: rgba(100, 116, 139, 0.16);
+}
+
+[data-theme="nordic"] .hourly-slot-row:hover {
+  background: rgba(59, 130, 246, 0.04);
+}
+
+[data-theme="nordic"] .hour-timestamp {
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Kategori Rozetleri (Nordic Açık Tema - Göz Yormayan Pastel Tonlar) */
+[data-theme="nordic"] .cat-Is,
+[data-theme="nordic"] .cat-İş {
+  background: #e0f2fe;
+  color: #0369a1;
+  border-color: #bae6fd;
+}
+
+[data-theme="nordic"] .cat-Saglik,
+[data-theme="nordic"] .cat-Sağlık {
+  background: #dcfce7;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+
+[data-theme="nordic"] .cat-Egitim,
+[data-theme="nordic"] .cat-Eğitim {
+  background: #fef3c7;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+[data-theme="nordic"] .cat-Kisisel,
+[data-theme="nordic"] .cat-Kişisel {
+  background: #fce7f3;
+  color: #be185d;
+  border-color: #fbcfe8;
+}
+
+[data-theme="nordic"] .cat-Rutin {
+  background: #ede9fe;
+  color: #6d28d9;
+  border-color: #ddd6fe;
+}
+
+[data-theme="nordic"] .cat-Genel {
+  background: #f1f5f9;
+  color: #475569;
+  border-color: #e2e8f0;
+}
+
+/* Aylık Görünüm Nordic */
+[data-theme="nordic"] .month-grid-wrapper {
+  background: #ffffff;
+  border-color: rgba(100, 116, 139, 0.16);
+  box-shadow: 0 2px 10px rgba(100, 116, 139, 0.05);
+}
+
+[data-theme="nordic"] .month-days-header {
+  background: #f8fafc;
+  border-bottom-color: rgba(100, 116, 139, 0.14);
+  color: #64748b;
+}
+
+[data-theme="nordic"] .month-days-header > div {
+  border-right-color: rgba(100, 116, 139, 0.12);
+}
+
+[data-theme="nordic"] .day-cell {
+  border-right-color: rgba(100, 116, 139, 0.12);
+  border-bottom-color: rgba(100, 116, 139, 0.12);
+}
+
+[data-theme="nordic"] .day-cell:hover {
+  background: #f1f5f9;
+}
+
+[data-theme="nordic"] .day-cell.other-month {
+  background: #f8fafc;
+  opacity: 0.5;
+}
+
+[data-theme="nordic"] .day-number {
+  color: #475569;
+}
+
+[data-theme="nordic"] .week-column {
+  background: #ffffff;
+  border-color: rgba(100, 116, 139, 0.16);
+  box-shadow: 0 2px 8px rgba(100, 116, 139, 0.05);
+}
+
+[data-theme="nordic"] .week-col-header {
+  border-bottom-color: rgba(100, 116, 139, 0.14);
+}
+
+[data-theme="nordic"] .vertical-day-row {
+  background: #ffffff;
+  border-color: rgba(100, 116, 139, 0.16);
+  box-shadow: 0 2px 8px rgba(100, 116, 139, 0.05);
+}
+
+[data-theme="nordic"] .vertical-day-row:hover {
+  background: #f8fafc;
+}
+
+/* ---------------------------------------------------------
+   GUEST MODE: ELEGANT FROSTED PREVIEW & CENTRAL GLASS CARD
+   --------------------------------------------------------- */
+/* =========================================================
+   GUEST CALENDAR BACKDROP & SLEEK OVERLAY (KOYU TEMA ORİJİNAL)
+   ========================================================= */
+.calendar-guest-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  max-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(13, 17, 26, 0.4);
+}
+
+.calendar-blur-backdrop {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  filter: blur(5px) saturate(1.15) brightness(0.85);
+  -webkit-filter: blur(5px) saturate(1.15) brightness(0.85);
+  opacity: 0.85;
+  pointer-events: none;
+  user-select: none;
+  transform: scale(1.02);
+  transition: all var(--transition-normal);
+}
+
+.calendar-guest-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 1.5rem 1rem;
+  box-sizing: border-box;
+  background: radial-gradient(circle at 50% 45%, rgba(67, 97, 238, 0.12) 0%, rgba(10, 13, 22, 0.5) 100%);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+[data-theme="nordic"] .calendar-guest-overlay {
+  background: transparent !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.calendar-guest-card {
+  background: rgba(16, 21, 36, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(67, 97, 238, 0.4);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 2.25rem 2rem 2.25rem;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45), 0 0 30px rgba(67, 97, 238, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: fadeInModal 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="nordic"] .calendar-guest-card {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(100, 116, 139, 0.22);
+  border-top: 2px solid var(--accent-primary);
+  box-shadow: 0 16px 40px rgba(100, 116, 139, 0.15), 0 0 25px rgba(67, 97, 238, 0.08);
+}
+
+.guest-card-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(67, 97, 238, 0.25), rgba(6, 182, 212, 0.2));
+  border: 1px solid rgba(67, 97, 238, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.15rem auto;
+  color: #60a5fa;
+  box-shadow: 0 4px 15px rgba(67, 97, 238, 0.25);
+}
+
+[data-theme="nordic"] .guest-card-icon {
+  background: linear-gradient(135deg, rgba(67, 97, 238, 0.15), rgba(6, 182, 212, 0.12));
+  color: var(--accent-primary);
+  border-color: rgba(67, 97, 238, 0.25);
+}
+
+.guest-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.55rem;
+  letter-spacing: -0.01em;
+}
+
+.guest-card-desc {
+  font-size: 0.865rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+
+.guest-features-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-bottom: 1.45rem;
+  flex-wrap: wrap;
+}
+
+.guest-feature-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.22rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+[data-theme="nordic"] .guest-feature-tag {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #475569;
+}
+
+.guest-card-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.guest-card-actions .btn {
+  padding: 0.65rem 1.35rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 1024px) {
+  .year-overview-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .calendar-main-view {
+    padding: 1rem;
+  }
+  .month-days-header, .month-days-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+  }
+  .day-cell {
+    min-height: 75px;
+    padding: 0.4rem;
+  }
+}
+
+
+
+
+/* GUEST CALENDAR BACKDROP & OVERLAY */
+.calendar-guest-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  max-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(13, 17, 26, 0.4);
+}
+
+.calendar-blur-backdrop {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  filter: blur(5px) saturate(1.15) brightness(0.85);
+  -webkit-filter: blur(5px) saturate(1.15) brightness(0.85);
+  opacity: 0.85;
+  pointer-events: none;
+  user-select: none;
+  transform: scale(1.02);
+  transition: all var(--transition-normal);
+}
+
+.calendar-guest-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 1.5rem 1rem;
+  box-sizing: border-box;
+  background: radial-gradient(circle at 50% 45%, rgba(67, 97, 238, 0.12) 0%, rgba(10, 13, 22, 0.5) 100%);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+[data-theme="nordic"] .calendar-guest-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="nordic"] .guest-card-icon {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #2563eb;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+[data-theme="nordic"] .guest-card-title {
+  color: #0f172a;
+}
+
+[data-theme="nordic"] .guest-card-desc {
+  color: #475569;
+}
+
+[data-theme="nordic"] .guest-feature-tag {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-weight: 600;
+}
+
+[data-theme="nordic"] .month-grid-wrapper {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="nordic"] .month-days-header {
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  color: #64748b;
+}
+
+[data-theme="nordic"] .day-cell {
+  background: #ffffff;
+  border-color: #f1f5f9;
+}
+
+[data-theme="nordic"] .day-cell:hover {
+  background: #f8fafc;
+}
+
+[data-theme="nordic"] .day-number {
+  color: #1e293b;
+  font-weight: 600;
+}
+
+[data-theme="nordic"] .day-cell.today .day-number { background: transparent !important; color: #1e293b !important; font-weight: 700 !important; }
+
+[data-theme="nordic"] .mini-cal-day {
+  color: #334155;
+}
+
+[data-theme="nordic"] .mini-cal-day.today { background: transparent !important; border: 1.5px solid #d8d5ca !important; color: #1e293b !important; font-weight: 700 !important; }
+
+/* =========================================================
+   COMPREHENSIVE NORDIC LIGHT THEME CALENDAR & GUEST CARD
+   ========================================================= */
+[data-theme="nordic"] .calendar-main-view {
+  background: transparent;
+}
+
+/* GUEST CALENDAR BACKDROP & OVERLAY */
+.calendar-guest-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  max-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(13, 17, 26, 0.4);
+}
+
+.calendar-blur-backdrop {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  filter: blur(5px) saturate(1.15) brightness(0.85);
+  -webkit-filter: blur(5px) saturate(1.15) brightness(0.85);
+  opacity: 0.85;
+  pointer-events: none;
+  user-select: none;
+  transform: scale(1.02);
+  transition: all var(--transition-normal);
+}
+
+.calendar-guest-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 1.5rem 1rem;
+  box-sizing: border-box;
+  background: radial-gradient(circle at 50% 45%, rgba(67, 97, 238, 0.12) 0%, rgba(10, 13, 22, 0.5) 100%);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+[data-theme="nordic"] .calendar-guest-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="nordic"] .guest-card-icon {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #2563eb;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+[data-theme="nordic"] .guest-card-title {
+  color: #0f172a;
+}
+
+[data-theme="nordic"] .guest-card-desc {
+  color: #475569;
+}
+
+[data-theme="nordic"] .guest-feature-tag {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-weight: 600;
+}
+
+[data-theme="nordic"] .month-grid-wrapper {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="nordic"] .month-days-header {
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  color: #475569;
+  font-weight: 700;
+}
+
+[data-theme="nordic"] .day-cell {
+  background: #ffffff;
+  border-color: #f1f5f9;
+}
+
+[data-theme="nordic"] .day-cell:hover {
+  background: #f8fafc;
+}
+
+[data-theme="nordic"] .day-cell.other-month {
+  background: #fafafa;
+  opacity: 0.6;
+}
+
+[data-theme="nordic"] .day-cell.today {
+  background: #eff6ff !important;
+  border-color: #bfdbfe !important;
+}
+
+[data-theme="nordic"] .day-number {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+[data-theme="nordic"] .day-cell.today .day-number { background: transparent !important; color: #1e293b !important; font-weight: 700 !important; }
+
+[data-theme="nordic"] .mini-cal-day {
+  color: #334155;
+  font-weight: 500;
+}
+
+[data-theme="nordic"] .mini-cal-day.today { background: transparent !important; border: 1.5px solid #d8d5ca !important; color: #1e293b !important; font-weight: 700 !important; }
+
+[data-theme="nordic"] .event-chip {
+  background: #f1f5f9;
+  border-left: 3px solid #64748b;
+  color: #1e293b;
+}
+
+[data-theme="nordic"] .event-chip.cat-Is {
+  background: #e0f2fe;
+  border-left-color: #0284c7;
+  color: #0369a1;
+}
+
+[data-theme="nordic"] .event-chip.cat-Saglik {
+  background: #eff6ff !important;
+  border-left-color: #3b82f6 !important;
+  color: #1d4ed8 !important;
+}
+
+[data-theme="nordic"] .event-chip.cat-Egitim {
+  background: #fef3c7;
+  border-left-color: #d97706;
+  color: #b45309;
+}
+
+[data-theme="nordic"] .event-chip.cat-Kisisel {
+  background: #fce7f3;
+  border-left-color: #db2777;
+  color: #be185d;
+}
+
+[data-theme="nordic"] .event-chip.cat-Rutin {
+  background: #ede9fe;
+  border-left-color: #7c3aed;
+  color: #6d28d9;
+}
+
+[data-theme="nordic"] .week-day-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+}
+
+[data-theme="nordic"] .week-day-card-header {
+  border-bottom: 1px solid #e2e8f0;
+  color: #0f172a;
+}
+
+[data-theme="nordic"] .hourly-slot-row {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+[data-theme="nordic"] .hour-timestamp {
+  color: #64748b;
+}
+
+[data-theme="nordic"] .year-month-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+}
+
+[data-theme="nordic"] .year-month-title {
+  color: #0f172a;
+}
+
+
+/* =========================================================
+   SADE & KUTUSUZ MOBİL TAKVİM (BORDERLESS CLEAN MINIMAL MOBILE)
+   Yalnızca <= 1024px ekranlara uygulanır; Masaüstü Web (> 1024px) %100 KİLİTLİDİR.
+   ========================================================= */
+@media (max-width: 1024px) {
+  /* Tüm kutu çerçevelerini ve fazla çizgileri kaldır */
+  .month-grid-wrapper,
+  .mobile-boxless-wrapper,
+  .single-month-grid-container {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+  }
+
+  .month-days-header {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: none !important;
+    padding: 0.4rem 0 !important;
+  }
+
+  .month-days-header > div,
+  .month-day-header-cell {
+    border: none !important;
+    border-right: none !important;
+    color: var(--text-tertiary) !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+  }
+
+  .month-days-grid,
+  .mobile-pure-dates-grid {
+    border: none !important;
+    background: transparent !important;
+    gap: 4px 2px !important;
+  }
+
+  .day-cell,
+  .day-cell.boxed-cell {
+    border: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    min-height: 48px !important;
+    max-height: 58px !important;
+    padding: 0.15rem 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .day-cell:hover {
+    background: transparent !important;
+  }
+
+  .day-cell.today {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .day-cell-top {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .day-number-circle {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+    transition: all var(--transition-fast) !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  .day-number-circle.other {
+    color: var(--text-tertiary) !important;
+    opacity: 0.35 !important;
+  }
+
+  .day-number-circle.is-today {
+    background: #2563eb !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35) !important;
+  }
+
+  [data-theme="nordic"] .day-number-circle.is-today { background: transparent !important; color: #1e293b !important; border: none !important; }
+
+  .day-event-dots-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    min-height: 6px !important;
+    margin-top: 2px !important;
+  }
+
+  .event-dot {
+    width: 4.5px !important;
+    height: 4.5px !important;
+    border-radius: 50% !important;
+    display: inline-block !important;
+  }
+
+  .event-dot.dot-Genel { background: #94a3b8 !important; }
+  .event-dot.dot-Is, .event-dot.dot-İş { background: #38bdf8 !important; }
+  .event-dot.dot-Saglik, .event-dot.dot-Sağlık { background: #34d399 !important; }
+  .event-dot.dot-Egitim, .event-dot.dot-Eğitim { background: #fbbf24 !important; }
+  .event-dot.dot-Kisisel, .event-dot.dot-Kişisel { background: #f472b6 !important; }
+  .event-dot.dot-Rutin { background: #a78bfa !important; }
+  .event-dot.dot-more {
+    font-size: 0.6rem !important;
+    color: var(--text-tertiary) !important;
+    font-weight: 800 !important;
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+  }
+
+  .month-stream-section {
+    margin-bottom: 2rem !important;
+  }
+
+  .month-stream-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0.75rem 0.25rem 0.35rem 0.25rem !important;
+    border-bottom: none !important;
+  }
+
+  .month-stream-title {
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--text-primary) !important;
+  }
+
+  .month-stream-year {
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: var(--text-secondary) !important;
+    margin-left: 0.25rem !important;
+  }
+}
+
+
+/* =========================================================
+   MOBİL TAŞMA ENGELLEYİCİ VE TAM UYUM SİSTEMİ (ZERO OVERFLOW)
+   Yalnızca <= 1024px ekranlara uygulanır; Masaüstü Web (%100 KORUNDU)
+   ========================================================= */
+@media (max-width: 1024px) {
+  .calendar-main-view,
+  .calendar-view-content,
+  .continuous-months-container,
+  .month-stream-section,
+  .week-timeline-vertical-list,
+  .week-grid-container,
+  .daily-agenda-container,
+  .year-overview-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Haftalık Dikey Kartların Mobilde Taşmasını Engelle */
+  .week-day-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.65rem !important;
+    padding: 0.85rem 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .week-day-card-header {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+
+  .week-day-card-body {
+    width: 100% !important;
+  }
+
+  .week-day-plans-flow {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+  }
+
+  .plan-card {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Yıllık Genel Bakışın Mobilde Taşmasını Engelle */
+  .year-overview-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.75rem !important;
+    padding: 0.25rem 0 !important;
+  }
+
+  /* 24 Saatlik Günlük Akışın Mobilde Taşmasını Engelle */
+  .hourly-slot-row {
+    padding: 0.65rem 0.5rem !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .year-overview-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .month-days-header,
+  .month-days-grid {
+    gap: 2px 0 !important;
+  }
+
+  .day-number-circle {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.88rem !important;
+  }
+}
+
+
+/* =========================================================
+   MOBİLDE HAFTALIK YATAY AKIŞ DÜZENİ
+   Yalnızca <= 1024px ekranlara uygulanır; Masaüstü Web (%100 KİLİTLİ)
+   ========================================================= */
+@media (max-width: 1024px) {
+  .week-grid-container {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 0.65rem !important;
+    padding: 0.5rem 0.25rem 0.85rem 0.25rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .week-column {
+    flex: 0 0 140px !important;
+    min-width: 140px !important;
+    max-width: 155px !important;
+    scroll-snap-align: start !important;
+    box-sizing: border-box !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius-md) !important;
+    background: var(--bg-surface) !important;
+    padding: 0.75rem 0.6rem !important;
+  }
+}
+
+
+/* =========================================================
+   MOBİLDE 7 GÜN SÜTUN BAŞLIKLARI & TAŞMASIZ HİZALAMA
+   Yalnızca <= 1024px ekranlara uygulanır; Masaüstü Web (%100 KİLİTLİ)
+   ========================================================= */
+@media (max-width: 1024px) {
+  .month-days-header {
+    display: grid !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0.35rem 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  .month-day-header-cell {
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: var(--text-tertiary) !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .month-days-grid,
+  .mobile-pure-dates-grid {
+    display: grid !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    border: none !important;
+    gap: 4px 0 !important;
+  }
+
+  .day-cell {
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.15rem 0 !important;
+  }
+}
+
+
+/* =========================================================
+   MOBİL YILLIK GÖRÜNÜM: WEB GÖRÜNÜMÜYLE BİREBİR ZARİF DÜZEN
+   Yalnızca <= 1024px ekranlara uygulanır; Masaüstü Web (%100 KİLİTLİ)
+   ========================================================= */
+@media (max-width: 1024px) {
+  .year-overview-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.25rem 0.85rem !important;
+    padding: 0.75rem 0.5rem 2.5rem 0.5rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .year-month-card {
+    background: transparent !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius-md) !important;
+    padding: 0.65rem 0.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    cursor: pointer !important;
+    transition: all var(--transition-fast) !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+  }
+
+  .year-month-card:hover,
+  .year-month-card:active {
+    background: var(--bg-surface-hover) !important;
+    border-color: var(--accent-primary) !important;
+  }
+
+  .year-month-title {
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    letter-spacing: -0.01em !important;
+    padding-bottom: 0.25rem !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    margin: 0 !important;
+    text-align: left !important;
+  }
+
+  .year-mini-grid {
+    display: grid !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+    gap: 2px 1px !important;
+    font-size: 0.72rem !important;
+    text-align: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .year-mini-header-cell {
+    font-size: 0.62rem !important;
+    font-weight: 700 !important;
+    color: var(--text-tertiary) !important;
+    padding-bottom: 0.25rem !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+  }
+
+  .year-mini-cell {
+    height: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.68rem !important;
+    color: var(--text-secondary) !important;
+    border-radius: var(--radius-xs) !important;
+    min-width: 0 !important;
+  }
+
+  .year-mini-cell.empty {
+    visibility: hidden !important;
+  }
+
+  .year-mini-cell.has-plan {
+    color: var(--accent-primary) !important;
+    font-weight: 700 !important;
+    position: relative !important;
+  }
+
+  .year-mini-cell.has-plan::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 1px !important;
+    width: 3px !important;
+    height: 3px !important;
+    border-radius: 50% !important;
+    background: var(--accent-primary) !important;
+  }
+
+  .year-mini-cell.is-special {
+    color: #38bdf8 !important;
+    font-weight: 700 !important;
+  }
+
+  .year-mini-cell.is-birthday {
+    color: #f472b6 !important;
+    font-weight: 700 !important;
+  }
+}
+
+
+/* =========================================================
+   MOBİL YILLIK GÖRÜNÜM: WEB STİLİ (4 SATIR X 3 SÜTUN DÜZENİ)
+   1. Satır: Ocak, Şubat, Mart | 2. Satır: Nisan, Mayıs, Haziran...
+   Yalnızca <= 1024px ekranlara uygulanır; Masaüstü Web (%100 KİLİTLİ)
+   ========================================================= */
+@media (max-width: 1024px) {
+  .year-overview-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.75rem 0.35rem !important;
+    padding: 0.5rem 0.25rem 2.5rem 0.25rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .year-month-card {
+    background: transparent !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius-md) !important;
+    padding: 0.45rem 0.3rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.35rem !important;
+    cursor: pointer !important;
+    transition: all var(--transition-fast) !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+  }
+
+  .year-month-card:hover,
+  .year-month-card:active {
+    background: var(--bg-surface-hover) !important;
+    border-color: var(--accent-primary) !important;
+  }
+
+  .year-month-title {
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    letter-spacing: -0.01em !important;
+    padding-bottom: 0.2rem !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    margin: 0 !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .year-mini-grid {
+    display: grid !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+    gap: 2px 1px !important;
+    font-size: 0.65rem !important;
+    text-align: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .year-mini-header-cell {
+    font-size: 0.58rem !important;
+    font-weight: 700 !important;
+    color: var(--text-tertiary) !important;
+    padding-bottom: 0.15rem !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+  }
+
+  .year-mini-cell {
+    height: 15px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.62rem !important;
+    color: var(--text-secondary) !important;
+    border-radius: var(--radius-xs) !important;
+    min-width: 0 !important;
+  }
+
+  .year-mini-cell.empty {
+    visibility: hidden !important;
+  }
+
+  .year-mini-cell.has-plan {
+    color: var(--accent-primary) !important;
+    font-weight: 700 !important;
+    position: relative !important;
+  }
+
+  .year-mini-cell.has-plan::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    width: 2.5px !important;
+    height: 2.5px !important;
+    border-radius: 50% !important;
+    background: var(--accent-primary) !important;
+  }
+
+  .year-mini-cell.is-special {
+    color: #38bdf8 !important;
+    font-weight: 700 !important;
+  }
+
+  .year-mini-cell.is-birthday {
+    color: #f472b6 !important;
+    font-weight: 700 !important;
+  }
+}
+
+
+/* =========================================================
+   YUMUŞATILMIŞ DİNLENDİRİCİ TAKVİM SİSTEMİ (SUPER SOFT LIGHT THEME)
+   ========================================================= */
+[data-theme="nordic"],
+[data-theme="light"] {
+  --bg-primary: #f7f6f2;
+  --bg-base: #f7f6f2;
+  --bg-secondary: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --accent-primary: #3b82f6;
+  --border-subtle: #eae7df;
+  --border-medium: #d8d3c5;
+}
+
+[data-theme="nordic"] .month-stream-title,
+[data-theme="light"] .month-stream-title {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+}
+
+[data-theme="nordic"] .month-stream-year,
+[data-theme="light"] .month-stream-year {
+  color: #64748b !important;
+  font-weight: 500 !important;
+}
+
+[data-theme="nordic"] .month-grid-wrapper,
+[data-theme="light"] .month-grid-wrapper,
+[data-theme="nordic"] .mobile-boxless-wrapper,
+[data-theme="light"] .mobile-boxless-wrapper {
+  background: #ffffff !important;
+  border: 1px solid #e7e4db !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 16px rgba(30, 41, 59, 0.03) !important;
+  overflow: hidden !important;
+}
+
+[data-theme="nordic"] .month-days-header,
+[data-theme="light"] .month-days-header {
+  background: #faf8f4 !important;
+  border-bottom: 1px solid #ede9e0 !important;
+  color: #57534e !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="nordic"] .month-days-header > div,
+[data-theme="light"] .month-days-header > div,
+[data-theme="nordic"] .month-day-header-cell,
+[data-theme="light"] .month-day-header-cell {
+  color: #78716c !important;
+  font-weight: 600 !important;
+  font-size: 0.82rem !important;
+  border-right: 1px solid #ede9e0 !important;
+}
+
+[data-theme="nordic"] .day-cell,
+[data-theme="light"] .day-cell {
+  background: #ffffff !important;
+  border-right: 1px solid #f4f2eb !important;
+  border-bottom: 1px solid #f4f2eb !important;
+  color: #334155 !important;
+}
+
+[data-theme="nordic"] .day-cell:hover,
+[data-theme="light"] .day-cell:hover {
+  background: #faf8f4 !important;
+}
+
+[data-theme="nordic"] .day-cell.other-month,
+[data-theme="light"] .day-cell.other-month {
+  background: #faf8f5 !important;
+}
+
+[data-theme="nordic"] .day-cell.other-month .day-number,
+[data-theme="light"] .day-cell.other-month .day-number,
+[data-theme="nordic"] .day-number-circle.other,
+[data-theme="light"] .day-number-circle.other {
+  color: #b0aba2 !important;
+  opacity: 0.65 !important;
+  font-weight: 400 !important;
+}
+
+[data-theme="nordic"] .day-number,
+[data-theme="light"] .day-number,
+[data-theme="nordic"] .day-number-circle,
+[data-theme="light"] .day-number-circle {
+  color: #334155 !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+}
+
+[data-theme="nordic"] .day-cell.today,
+[data-theme="light"] .day-cell.today {
+  background: #ffffff !important;
+  border-right: 1px solid #f4f2eb !important;
+  border-bottom: 1px solid #f4f2eb !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+[data-theme="nordic"] .day-cell.today .day-number,
+[data-theme="light"] .day-cell.today .day-number,
+[data-theme="nordic"] .day-number-circle.is-today,
+[data-theme="light"] .day-number-circle.is-today {
+  background: transparent !important;
+  color: #334155 !important;
+  font-weight: 700 !important;
+  border: none !important;
+}
+
+[data-theme="nordic"] .mini-cal-cell.today,
+[data-theme="light"] .mini-cal-cell.today,
+[data-theme="nordic"] .mini-cal-day.today,
+[data-theme="light"] .mini-cal-day.today {
+  background: transparent !important;
+  border: 1.5px solid #d8d3c5 !important;
+  color: #1e293b !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+
+/* Yumuşak İpeksi Kategori Rozetleri */
+[data-theme="nordic"] .cat-Is,
+[data-theme="nordic"] .cat-İş,
+[data-theme="light"] .cat-Is,
+[data-theme="light"] .cat-İş {
+  background: #f0f9ff !important;
+  color: #0284c7 !important;
+  border: 1px solid #e0f2fe !important;
+}
+
+[data-theme="nordic"] .cat-Saglik,
+[data-theme="nordic"] .cat-Sağlık,
+[data-theme="light"] .cat-Saglik,
+[data-theme="light"] .cat-Sağlık {
+  background: #f0fdf4 !important;
+  color: #16a34a !important;
+  border: 1px solid #dcfce7 !important;
+}
+
+[data-theme="nordic"] .cat-Egitim,
+[data-theme="nordic"] .cat-Eğitim,
+[data-theme="light"] .cat-Egitim,
+[data-theme="light"] .cat-Eğitim {
+  background: #fffbeb !important;
+  color: #d97706 !important;
+  border: 1px solid #fef3c7 !important;
+}
+
+[data-theme="nordic"] .cat-Kisisel,
+[data-theme="nordic"] .cat-Kişisel,
+[data-theme="light"] .cat-Kisisel,
+[data-theme="light"] .cat-Kişisel {
+  background: #fff1f2 !important;
+  color: #e11d48 !important;
+  border: 1px solid #ffe4e6 !important;
+}
+
+[data-theme="nordic"] .cat-Rutin,
+[data-theme="light"] .cat-Rutin {
+  background: #f5f3ff !important;
+  color: #7c3aed !important;
+  border: 1px solid #ede9fe !important;
+}
+
+[data-theme="nordic"] .cat-Genel,
+[data-theme="light"] .cat-Genel {
+  background: #faf8f4 !important;
+  color: #475569 !important;
+  border: 1px solid #eae7df !important;
+}
+
+[data-theme="nordic"] .plan-card,
+[data-theme="light"] .plan-card {
+  background: #ffffff !important;
+  border: 1px solid #eae7df !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(30, 41, 59, 0.03) !important;
+}
+
+[data-theme="nordic"] .plan-card:hover,
+[data-theme="light"] .plan-card:hover {
+  border-color: #d8d3c5 !important;
+  box-shadow: 0 4px 14px rgba(30, 41, 59, 0.06) !important;
+}
+
+[data-theme="nordic"] .plan-title,
+[data-theme="light"] .plan-title {
+  color: #1e293b !important;
+}
+
+[data-theme="nordic"] .hourly-slot-row,
+[data-theme="light"] .hourly-slot-row {
+  border-bottom: 1px solid #f4f2eb !important;
+}
+
+[data-theme="nordic"] .hour-timestamp,
+[data-theme="light"] .hour-timestamp {
+  color: #64748b !important;
+}
+
+[data-theme="nordic"] .week-day-card,
+[data-theme="light"] .week-day-card {
+  background: #ffffff !important;
+  border: 1px solid #eae7df !important;
+  border-radius: 14px !important;
+  box-shadow: 0 2px 8px rgba(30, 41, 59, 0.03) !important;
+}
+
+[data-theme="nordic"] .year-month-card,
+[data-theme="light"] .year-month-card {
+  background: #ffffff !important;
+  border: 1px solid #eae7df !important;
+  border-radius: 14px !important;
+  box-shadow: 0 2px 8px rgba(30, 41, 59, 0.03) !important;
+}
+
+[data-theme="nordic"] .year-month-title,
+[data-theme="light"] .year-month-title {
+  color: #3b82f6 !important;
+  font-weight: 700 !important;
+}

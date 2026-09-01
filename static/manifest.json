@@ -1,0 +1,40 @@
+{
+  "name": "Routines — Akıllı Kişisel Ajanda, Takvim & Yapay Zeka Zaman Koçu",
+  "short_name": "Routines",
+  "description": "Zamanınızı sakinlikle planlayın, rutinlerinizi ve hedeflerinizi Google Gemini AI zaman koçu ile yönetin.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0f19",
+  "theme_color": "#0b0f19",
+  "orientation": "any",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "/static/img/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/img/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": [
+    "productivity",
+    "utilities",
+    "lifestyle"
+  ]
+}

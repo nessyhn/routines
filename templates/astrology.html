@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="obsidian">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astroloji & Günlük Burç Yorumları</title>
+  <meta name="description" content="Doğum tarihinize özel günlük burç yorumları, astrolojik tavsiyeler ve günün ilhamı.">
+  
+  <!-- CSS Dosyaları -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    .astro-page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.25rem;
+    }
+
+    .astro-hero-card {
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition-normal);
+    }
+
+    .astro-hero-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--accent-primary), var(--accent-info));
+    }
+
+    .astro-hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      flex: 1;
+    }
+
+    .astro-badge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .astro-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-glow);
+      color: var(--accent-primary);
+      border: 1px solid var(--accent-primary);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .astro-hero-symbol {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: var(--bg-input);
+      border: 2px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: var(--accent-primary);
+      box-shadow: 0 8px 24px var(--accent-glow);
+      flex-shrink: 0;
+      transition: all var(--transition-normal);
+    }
+
+    .astro-quote-large {
+      font-size: 1.05rem;
+      color: var(--text-main);
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    .astro-motto-large {
+      font-size: 0.925rem;
+      color: var(--accent-warning);
+      font-style: italic;
+      padding-top: 0.5rem;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    /* 12 Burç Seçim Kartları Izgarası */
+    .signs-grid-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .all-signs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 1.15rem;
+    }
+
+    .sign-mini-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      text-align: center;
+      position: relative;
+    }
+
+    .sign-mini-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-primary);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px var(--accent-glow);
+    }
+
+    .sign-mini-card.active {
+      border: 2px solid var(--accent-primary);
+      background: var(--bg-card);
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+
+    .sign-card-symbol {
+      font-size: 2.5rem;
+      color: var(--accent-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .sign-card-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .sign-card-dates {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .sign-card-action {
+      font-size: 0.725rem;
+      color: var(--accent-primary);
+      font-weight: 600;
+      margin-top: 0.25rem;
+    }
+
+    /* Burç Detay Popup Modalı */
+    .sign-detail-modal-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 540px;
+      padding: 2.25rem;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      position: relative;
+    }
+
+    .modal-symbol-header {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .modal-symbol-circle {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: var(--bg-input);
+      border: 2px solid var(--accent-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.75rem;
+      color: var(--accent-primary);
+      box-shadow: 0 4px 16px var(--accent-glow);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .astro-hero-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .astro-badge-wrap {
+        justify-content: center;
+      }
+      .all-signs-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ÜST BAŞLIK -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="brand-icon">🔮</div>
+      <div>
+        <h1 class="brand-title">Astroloji & Günlük Burç</h1>
+        <p class="brand-subtitle">Doğum Tarihinize Özel Günlük Rehberiniz</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <!-- 5 Tema Seçici -->
+      <div class="theme-switcher" title="Tema Seçin">
+        <button class="theme-btn active" data-theme="obsidian" title="Obsidian Dark">🌑</button>
+        <button class="theme-btn" data-theme="nordic" title="Nordic Clean">☀️</button>
+        <button class="theme-btn" data-theme="sunset" title="Warm Sunset">🌅</button>
+        <button class="theme-btn" data-theme="emerald" title="Emerald Forest">🌲</button>
+        <button class="theme-btn" data-theme="cyber" title="Cyber Neon">⚡</button>
+      </div>
+
+      <!-- Takvime Geri Dön Butonu -->
+      <a href="/" class="btn btn-primary btn-sm">
+        <span>📅 Takvime Dön</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ANA ASTROLOJİ SAYFASI İÇERİĞİ -->
+  <main class="astro-page-container">
+    
+    <!-- ÖNE ÇIKAN GÜNLÜK BURÇ YORUMU KARTI (Kullanıcının Kendi Burcu veya Seçilen Burç) -->
+    <section class="astro-hero-card" id="heroCardSection">
+      <div class="astro-hero-content">
+        <div class="astro-badge-wrap">
+          <span class="astro-badge" id="astroHeroBadge">✨ Günlük Burç Yorumu</span>
+          <span style="font-size: 0.825rem; color: var(--text-dim);" id="astroHeroDate"></span>
+        </div>
+        <p class="astro-quote-large" id="astroHeroText">
+          Günün astrolojik yorumu ve tavsiyeleri yükleniyor...
+        </p>
+        <p class="astro-motto-large" id="astroHeroMotto"></p>
+      </div>
+      <div class="astro-hero-symbol" id="astroHeroSymbol">
+        ✨
+      </div>
+    </section>
+
+    <!-- TÜM 12 BURÇ SEÇİM IZGARASI -->
+    <section>
+      <h2 class="signs-grid-title">
+        <span>🌟 12 Burcun Günlük Yorumları (İncelemek İçin Tıklayın)</span>
+      </h2>
+      <div class="all-signs-grid" id="allSignsGrid">
+        <!-- JavaScript ile 12 burç listelenir -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BURÇ DETAY MODALI / AÇILIR EKRAN -->
+  <div class="modal-overlay" id="signDetailModal">
+    <div class="sign-detail-modal-box">
+      <div class="modal-header" style="margin-bottom: 0;">
+        <h3 class="modal-title" id="modalSignTitle">Burç Yorumu</h3>
+        <button class="modal-close" onclick="closeSignModal()">&times;</button>
+      </div>
+      
+      <div class="modal-symbol-header">
+        <div class="modal-symbol-circle" id="modalSignSymbol">♈</div>
+        <div>
+          <h2 id="modalSignName" style="font-size: 1.35rem; color: var(--text-main);">Koç Burcu</h2>
+          <p id="modalSignDates" style="font-size: 0.8rem; color: var(--text-muted);"></p>
+          <span class="badge-category cat-Is" id="modalDateBadge" style="margin-top: 0.25rem;"></span>
+        </div>
+      </div>
+
+      <div style="background: var(--bg-input); padding: 1.15rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+        <p id="modalSignText" style="font-size: 0.95rem; line-height: 1.65; color: var(--text-main); font-weight: 500;">
+          Yorum yükleniyor...
+        </p>
+      </div>
+
+      <p id="modalSignMotto" style="font-size: 0.85rem; color: var(--accent-warning); font-style: italic;">
+        💡 İlham: ...
+      </p>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button class="btn btn-primary btn-sm" onclick="closeSignModal()">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tema Yöneticisi
+    const savedTheme = localStorage.getItem("daily_routine_theme") || "obsidian";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+
+    document.querySelectorAll(".theme-btn").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.theme === savedTheme);
+      btn.addEventListener("click", (e) => {
+        const theme = e.currentTarget.dataset.theme;
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("daily_routine_theme", theme);
+        document.querySelectorAll(".theme-btn").forEach((b) => b.classList.toggle("active", b.dataset.theme === theme));
+      });
+    });
+
+    const signsList = [
+      { en: "aries", tr: "Koç", symbol: "♈", dates: "21 Mar - 19 Nis" },
+      { en: "taurus", tr: "Boğa", symbol: "♉", dates: "20 Nis - 20 May" },
+      { en: "gemini", tr: "İkizler", symbol: "♊", dates: "21 May - 20 Haz" },
+      { en: "cancer", tr: "Yengeç", symbol: "♋", dates: "21 Haz - 22 Tem" },
+      { en: "leo", tr: "Aslan", symbol: "♌", dates: "23 Tem - 22 Ağu" },
+      { en: "virgo", tr: "Başak", symbol: "♍", dates: "23 Ağu - 22 Eyl" },
+      { en: "libra", tr: "Terazi", symbol: "♎", dates: "23 Eyl - 22 Eki" },
+      { en: "scorpio", tr: "Akrep", symbol: "♏", dates: "23 Eki - 21 Kas" },
+      { en: "sagittarius", tr: "Yay", symbol: "♐", dates: "22 Kas - 21 Ara" },
+      { en: "capricorn", tr: "Oğlak", symbol: "♑", dates: "22 Ara - 19 Oca" },
+      { en: "aquarius", tr: "Kova", symbol: "♒", dates: "20 Oca - 18 Şub" },
+      { en: "pisces", tr: "Balık", symbol: "♓", dates: "19 Şub - 20 Mar" }
+    ];
+
+    let currentSelectedSign = "";
+
+    function renderSignsGrid() {
+      const grid = document.getElementById("allSignsGrid");
+      if (!grid) return;
+
+      grid.innerHTML = signsList.map(s => `
+        <div class="sign-mini-card ${s.en === currentSelectedSign ? 'active' : ''}" onclick="openSignModal('${s.en}')">
+          <div class="sign-card-symbol">${s.symbol}</div>
+          <div class="sign-card-name">${s.tr}</div>
+          <div class="sign-card-dates">${s.dates}</div>
+          <div class="sign-card-action">Yorumu Oku ➔</div>
+        </div>
+      `).join("");
+    }
+
+    async function loadUserHoroscope() {
+      const heroBadge = document.getElementById("astroHeroBadge");
+      const heroDate = document.getElementById("astroHeroDate");
+      const heroText = document.getElementById("astroHeroText");
+      const heroMotto = document.getElementById("astroHeroMotto");
+      const heroSymbol = document.getElementById("astroHeroSymbol");
+
+      try {
+        const response = await fetch("/api/horoscope");
+        const res = await response.json();
+
+        if (res.status === "success" && res.data) {
+          const d = res.data;
+          currentSelectedSign = d.burcEn;
+          if (heroBadge) heroBadge.textContent = `${d.simge} ${d.burc} Burcu (Kişisel Yorumunuz)`;
+          if (heroDate) heroDate.textContent = d.tarih;
+          if (heroText) heroText.textContent = `"${d.yorum}"`;
+          if (heroMotto) heroMotto.textContent = `💡 Günün İlhamı: ${d.motto}`;
+          if (heroSymbol) heroSymbol.textContent = d.simge;
+          renderSignsGrid();
+        } else {
+          // Oturum açılmamışsa varsayılan olarak Koç burcunu yükle
+          loadSignToHero("aries");
+        }
+      } catch (err) {
+        loadSignToHero("aries");
+      }
+    }
+
+    async function loadSignToHero(signEn) {
+      try {
+        const response = await fetch(`/api/horoscope?sign=${signEn}`);
+        const res = await response.json();
+        if (res.status === "success" && res.data) {
+          const d = res.data;
+          currentSelectedSign = d.burcEn;
+          document.getElementById("astroHeroBadge").textContent = `${d.simge} ${d.burc} Burcu`;
+          document.getElementById("astroHeroDate").textContent = d.tarih;
+          document.getElementById("astroHeroText").textContent = `"${d.yorum}"`;
+          document.getElementById("astroHeroMotto").textContent = `💡 Günün İlhamı: ${d.motto}`;
+          document.getElementById("astroHeroSymbol").textContent = d.simge;
+          renderSignsGrid();
+        }
+      } catch (e) {}
+    }
+
+    async function openSignModal(signEn) {
+      const modal = document.getElementById("signDetailModal");
+      const modalSymbol = document.getElementById("modalSignSymbol");
+      const modalName = document.getElementById("modalSignName");
+      const modalDates = document.getElementById("modalSignDates");
+      const modalDateBadge = document.getElementById("modalDateBadge");
+      const modalText = document.getElementById("modalSignText");
+      const modalMotto = document.getElementById("modalSignMotto");
+
+      const signInfo = signsList.find(s => s.en === signEn) || signsList[0];
+      
+      modalSymbol.textContent = signInfo.symbol;
+      modalName.textContent = `${signInfo.tr} Burcu`;
+      modalDates.textContent = signInfo.dates;
+      modalText.textContent = "Günlük yorum yükleniyor...";
+      modalMotto.textContent = "";
+
+      modal.classList.add("active");
+
+      try {
+        const response = await fetch(`/api/horoscope?sign=${signEn}`);
+        const res = await response.json();
+
+        if (res.status === "success" && res.data) {
+          const d = res.data;
+          modalDateBadge.textContent = d.tarih;
+          modalText.textContent = `"${d.yorum}"`;
+          modalMotto.textContent = `💡 Günün İlhamı: ${d.motto}`;
+          // Aynı zamanda ana kartı da güncelle
+          loadSignToHero(signEn);
+        } else {
+          modalText.textContent = "Yorum alınamadı.";
+        }
+      } catch (err) {
+        modalText.textContent = "Bağlantı hatası oluştu.";
+      }
+    }
+
+    function closeSignModal() {
+      const modal = document.getElementById("signDetailModal");
+      if (modal) modal.classList.remove("active");
+    }
+
+    // Modal dışına tıklayınca kapatma
+    window.addEventListener("click", (e) => {
+      const modal = document.getElementById("signDetailModal");
+      if (e.target === modal) closeSignModal();
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderSignsGrid();
+      loadUserHoroscope();
+    });
+  </script>
+</body>
+</html>

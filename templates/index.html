@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="obsidian">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>Routines — Akıllı Kişisel Ajanda, Takvim & Yapay Zeka Zaman Koçu</title>
+  <meta name="title" content="Routines — Akıllı Kişisel Ajanda, Takvim & Yapay Zeka Zaman Koçu">
+  <meta name="description" content="Zamanınızı sakinlikle planlayın, rutinlerinizi ve hedeflerinizi bir düzenle yönetin. Akıllı hatırlatıcılar, burç analizleri ve Google Gemini destekli yapay zeka zaman koçu.">
+  <meta name="keywords" content="ajanda, takvim, günlük planlayıcı, rutin takipçisi, yapay zeka zaman koçu, kişisel planlama, haftalık takvim, günlük burç yorumu, verimlilik uygulaması, habits tracker, task manager">
+  <meta name="author" content="Routines">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://routines.app/">
+
+  <!-- Theme & Browser UI -->
+  <meta name="theme-color" content="#0b0f19" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="color-scheme" content="dark light">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Routines">
+
+  <!-- Favicon & Icons -->
+  <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon-16x16.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/img/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph / Facebook / WhatsApp / LinkedIn / Discord -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:url" content="https://routines.app/">
+  <meta property="og:site_name" content="Routines">
+  <meta property="og:title" content="Routines — Akıllı Kişisel Ajanda, Takvim & Yapay Zeka Zaman Koçu">
+  <meta property="og:description" content="Zamanınızı sakinlikle planlayın, rutinlerinizi ve hedeflerinizi bir düzenle yönetin. Akıllı hatırlatıcılar ve Google Gemini yapay zeka zaman koçu.">
+  <meta property="og:image" content="/static/img/og-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Routines Akıllı Takvim ve Günlük Planlayıcı Arayüzü">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://routines.app/">
+  <meta name="twitter:title" content="Routines — Akıllı Kişisel Ajanda & Takvim">
+  <meta name="twitter:description" content="Günlük planlar, akıllı hatırlatıcılar ve yapay zeka zaman koçu ile üretkenliğinizi zirveye taşıyın.">
+  <meta name="twitter:image" content="/static/img/og-preview.png">
+
+  <!-- Structured Data (JSON-LD - Schema.org WebApplication) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Routines",
+    "url": "https://routines.app/",
+    "description": "Zamanınızı sakinlikle planlayın, rutinlerinizi ve hedeflerinizi bir düzenle yönetin. Akıllı hatırlatıcılar, çoklu takvim görünümleri ve Google Gemini AI zaman koçu.",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "All",
+    "inLanguage": "tr",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "TRY"
+    },
+    "featureList": [
+      "Aylık, Haftalık, Günlük ve Yıllık Takvim Görünümleri",
+      "Google Gemini Destekli Yapay Zeka Zaman Koçu",
+      "Akıllı ve Kişiselleştirilmiş Hatırlatıcı Bildirimleri",
+      "Günlük Burç ve İlham Veren Yaşam Analizi",
+      "Özelleştirilebilir Koyu (Obsidian) ve Açık (Nordic) Temalar",
+      "TXT Formatında Güvenli Yedekleme ve Dışa Aktarma"
+    ]
+  }
+  </script>
+  
+  <!-- CSS Dosyaları & FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts: Inter & Caveat (El Yazısı) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/calendar.css">
+</head>
+<body>
+
+  <!-- =========================================================
+       AÇILIŞ / KARŞILAMA EKRANI (TAM KORUNDU)
+       ========================================================= -->
+  <section class="welcome-hero-screen" id="welcomeHeroScreen">
+    <div class="welcome-hero-box">
+      <div class="hero-minimal-icon">✦</div>
+      <h1 class="hero-main-title">
+        Daily <strong>Routines</strong>
+      </h1>
+      <p class="hero-main-subtitle">
+        Zamanınızı sakinlikle planlayın, rutinlerinizi ve hedeflerinizi bir düzenle yönetin.
+      </p>
+
+      <!-- BUTONSUZ, SOFT YAZI YÖNLENDİRMESİ -->
+      <div class="soft-hero-action" id="startPlanningBtn" role="button" tabindex="0" title="Takvime Geç">
+        <span class="soft-action-text">Haydi gününü planla</span>
+        <span class="soft-action-arrow">⟶</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÜST BAŞLIK / FLOATING HEADER (LOGO SAĞDA, KONTROLLER SOLDA) -->
+  <header class="app-header">
+    <!-- SOL TARAF: MENÜ BUTONU VE PROFİL ROZETİ -->
+    <div class="header-actions">
+      <!-- ÜÇ ÇİZGİLİ MENÜ BUTONU -->
+      <button class="btn-drawer-toggle" id="btnOpenSideDrawer" aria-label="Menüyü Aç" title="Menüyü Aç">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <!-- Giriş Yapmamış Kullanıcı Butonları -->
+      <div id="authGuestSection" style="display: flex; gap: 0.5rem;">
+        <button class="btn btn-outline btn-sm" id="openLoginModalBtn">
+          <span>Giriş Yap</span>
+        </button>
+        <button class="btn btn-primary btn-sm" id="openRegisterModalBtn">
+          <span>Kayıt Ol</span>
+        </button>
+      </div>
+
+      <!-- Giriş Yapmış Kullanıcı Alanı (Profil Rozeti - Tıklanabilir) -->
+      <div id="authUserSection" style="display: none; align-items: center;">
+        <div class="user-profile-badge" id="openSettingsBadgeBtn" role="button" tabindex="0" title="Hesap ve Profil Ayarları">
+          <div class="user-avatar" id="userAvatarText">U</div>
+          <span id="displayUsername">Kullanıcı</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAĞ TARAF: LOGO VE MARKA (KORUNAN LOGO: r. Routines) -->
+    <div class="brand-section">
+      <div class="brand-icon-logo">r.</div>
+      <div>
+        <h1 class="brand-title">Routines</h1>
+      </div>
+    </div>
+  </header>
+
+  <!-- ANA İÇERİK: 1/4 SOL PANEL - 3/4 SAĞ TAKVİM ALANI -->
+  <main class="app-container app-layout-grid">
+    
+    <!-- SOL PANEL (1/4 GENİŞLİK - WİDGET'LAR VEYA ENTEGRE AI SOHBET KUTUSU) -->
+    <aside class="sidebar-panel" id="sidebarPanel" aria-label="Yan Panel">
+      
+                        <!-- GÖRÜNÜM 1: WIDGET'LAR ALANI -->
+      <div class="sidebar-view-wrapper" id="sidebarWidgetsView">
+        <!-- WIDGET 1: Hızlı Mini Takvim Seçici -->
+        <div class="sidebar-widget" id="quickCalendarWidget">
+          <div class="widget-header-row">
+            <span class="widget-title">Hızlı Takvim</span>
+            <span class="widget-badge" id="miniCalCurrentMonth">Ağustos 2026</span>
+          </div>
+          <div class="mini-calendar-wrap">
+            <div class="mini-cal-grid" id="miniCalendarGrid">
+              <!-- JavaScript ile doldurulur -->
+            </div>
+          </div>
+        </div>
+
+        <!-- WIDGET 2: Görseldeki Birebir Koyu Çizgili Not Kağıdı (Günün Özeti) -->
+        <div class="sidebar-widget sticky-note-paper" id="stickyNoteWidget" aria-label="Günün Özeti Not Kağıdı">
+          <!-- Üstten Bant Efekti -->
+          <div class="note-tape-pin"></div>
+          
+          <!-- Not Başlığı Satırı -->
+          <div class="note-header-row">
+            <h3 class="note-title">Günün Özeti</h3>
+            <span class="note-date-tag" id="noteDateTag">Bugün</span>
+          </div>
+
+          <!-- Madde Madde Bugünkü Planlar / To-Do Listesi -->
+          <div class="note-todo-list" id="noteTodoList">
+            <!-- JavaScript ile bugünün planları render edilir -->
+          </div>
+        </div>
+      </div>
+
+      <!-- GÖRÜNÜM 2: SOL PANEL İÇİNDE CANLI AI SOHBET KUTUSU (IN-SIDEBAR LIVE CHAT) -->
+      <div class="sidebar-chat-view" id="sidebarChatView" style="display: none;">
+        <!-- Chat Başlık Barı -->
+        <div class="sidebar-chat-header">
+          <button type="button" class="sidebar-chat-btn-back" id="btnSidebarBackToWidgets" title="Geri Dön">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Geri</span>
+          </button>
+          <div class="sidebar-chat-header-title">
+            <span>AI Koç</span>
+            <span class="sidebar-chat-dot">● Canlı</span>
+          </div>
+          <button type="button" class="sidebar-chat-btn-action" id="btnClearAiChatSidebar" title="Yeni Sohbet Başlat">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Hızlı Soru Hapları -->
+        <div class="ai-prompt-pills-row in-sidebar">
+          <button type="button" class="ai-prompt-pill" data-prompt="Bugün çok yoğunum, günün kalanını nasıl toparlayabilirim?">
+            Günümü Toparla
+          </button>
+          <button type="button" class="ai-prompt-pill" data-prompt="Günüme 20 dakikalık yürüyüş ve mola rutini nasıl ekleyebilirim?">
+            Mola & Yürüyüş
+          </button>
+          <button type="button" class="ai-prompt-pill" data-prompt="Bugün için bana üretkenlik ve motivasyon tavsiyesi ver.">
+            Günün Tavsiyesi
+          </button>
+        </div>
+
+        <!-- Mesaj Akışı -->
+        <div class="sidebar-chat-messages" id="sidebarAiChatMessages">
+          <!-- JS ile mesajlar render edilir -->
+        </div>
+
+        <!-- Mesaj Gönderme Formu -->
+        <form class="sidebar-chat-input-form" id="sidebarAiChatForm">
+          <input type="text" id="sidebarAiChatInput" class="form-input sidebar-chat-input" placeholder="Bir şey sor..." autocomplete="off">
+          <button type="submit" class="btn btn-primary sidebar-chat-send-btn" title="Gönder">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;">
+              <line x1="12" y1="19" x2="12" y2="5"></line>
+              <polyline points="5 12 12 5 19 12"></polyline>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+    </aside>
+ 
+    <!-- SÜRÜKLENEBİLİR AYIRICI ÇUBUK (RESIZER) -->
+    <div class="layout-resizer" id="layoutResizer" title="Genişliği ayarlamak için sağa/sola sürükleyin">
+      <div class="resizer-handle"></div>
+    </div>
+
+    <!-- SAĞ PANEL (TAKVİM VE KONTROLLER) -->
+    <div class="main-content-panel">
+      
+      <!-- BİRLEŞİK KONTROL & NAVİGASYON BLOĞU -->
+      <div class="calendar-top-controls-wrapper" id="calendarTopControlsWrapper">
+        <section class="control-bar" aria-label="Takvim Kontrolleri">
+          <!-- Zaman Dilimi Görünümleri -->
+          <div class="view-controls" role="group" aria-label="Görünüm Seçenekleri">
+            <button class="view-btn active" data-view="month">Ay</button>
+            <button class="view-btn" data-view="week">Hafta</button>
+            <button class="view-btn" data-view="day">Gün</button>
+            <button class="view-btn" data-view="year">Yıl</button>
+          </div>
+
+          <!-- Sağ Kısım: Yatay/Dikey ve Plan Ekle Yan Yana -->
+          <div class="control-right-group" style="display: flex; align-items: center; gap: 0.65rem;">
+            <!-- Yönlendirme Modu (Yatay / Dikey) - Misafirde gizli, oturum açılınca görünür -->
+            <div class="orientation-toggle" id="orientationToggleGroup" role="group" aria-label="Yönlendirme Modu" style="display: none;">
+              <button class="orientation-btn active" data-orientation="horizontal" title="Yatay Tablo Görünümü">
+                <span>Yatay</span>
+              </button>
+              <button class="orientation-btn" data-orientation="vertical" title="Dikey Liste Görünümü">
+                <span>Dikey</span>
+              </button>
+            </div>
+
+            <!-- Yeni Plan Ekle Butonu -->
+            <button class="btn btn-primary btn-sm" id="openAddPlanBtn">
+              <span>+ Plan Ekle</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Takvim Navigasyon Başlığı -->
+        <div class="calendar-header-nav">
+          <div class="nav-date-title" id="navDateTitle"><span>2026</span></div>
+          <div class="nav-buttons">
+            <button class="btn btn-outline btn-sm btn-icon" id="navPrevBtn" title="Önceki" aria-label="Önceki">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button class="btn btn-outline btn-sm" id="navTodayBtn">Bugün</button>
+            <button class="btn btn-outline btn-sm btn-icon" id="navNextBtn" title="Sonraki" aria-label="Sonraki">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAKVİM ANA EKRANI -->
+      <section class="calendar-main-view" aria-label="Ana Takvim Görünümü">
+        <!-- Dinamik Render Edilecek Takvim İçeriği -->
+        <div id="calendarViewContent"></div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- =========================================================
+       MODAL 1: GİRİŞ YAP (LOGIN)
+       ========================================================= -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title">Oturum Aç</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="loginUsername">Kullanıcı Adı</label>
+          <input type="text" id="loginUsername" class="form-input" placeholder="Kullanıcı adınızı girin" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label class="form-label" for="loginPassword">Şifre</label>
+            <a href="#" id="openForgotModalBtn" style="font-size: 0.75rem; color: var(--accent-primary); text-decoration: none;">Şifremi Unuttum</a>
+          </div>
+          <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem; justify-content: center;">
+          <span>Giriş Yap</span>
+        </button>
+        <p style="text-align: center; margin-top: 1rem; font-size: 0.825rem; color: var(--text-secondary);">
+          Hesabınız yok mu? <a href="#" id="switchToRegister" style="color: #ffffff; font-weight: 600; text-decoration: none;">Kayıt Olun</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 2: KAYIT OL (REGISTER)
+       ========================================================= -->
+  <div class="modal-overlay" id="registerModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title">Yeni Hesap Oluştur</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="registerForm">
+        <div class="form-group">
+          <label class="form-label" for="regUsername">Kullanıcı Adı</label>
+          <input type="text" id="regUsername" class="form-input" placeholder="kullanici_adi" required autocomplete="username">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="regEmail">Gmail / E-posta</label>
+            <input type="email" id="regEmail" class="form-input" placeholder="ornek@gmail.com" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regBirthDate">Doğum Tarihi</label>
+            <input type="text" id="regBirthDate" class="form-input" placeholder="15.05.2000" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regPassword">Şifre</label>
+          <input type="password" id="regPassword" class="form-input" placeholder="••••••••" required autocomplete="new-password">
+        </div>
+
+        <div class="password-requirements">
+          <div class="req-title">Şifre Güvenlik Gereksinimleri</div>
+          <div class="req-item invalid" id="reg-req-length">• En az 8 karakter</div>
+          <div class="req-item invalid" id="reg-req-upper">• En az bir büyük harf (A-Z)</div>
+          <div class="req-item invalid" id="reg-req-lower">• En az bir küçük harf (a-z)</div>
+          <div class="req-item invalid" id="reg-req-digit">• En az bir rakam (0-9)</div>
+          <div class="req-item invalid" id="reg-req-special">• En az bir özel karakter (!@#$%^&* vb.)</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+          <span>Hesap Oluştur</span>
+        </button>
+        <p style="text-align: center; margin-top: 1rem; font-size: 0.825rem; color: var(--text-secondary);">
+          Zaten hesabınız var mı? <a href="#" id="switchToLogin" style="color: #ffffff; font-weight: 600; text-decoration: none;">Giriş Yapın</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 3: ŞİFREMİ UNUTTUM (E-POSTA ONAY KODLU DOĞRULAMA)
+       ========================================================= -->
+  <div class="modal-overlay" id="forgotPasswordModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title" id="forgotModalTitle">Şifremi Sıfırla</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+
+      <!-- ADIM 1: KULLANICI BİLGİLERİ & ONAY KODU İSTEME -->
+      <form id="forgotStep1Form">
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+          Hesabınıza kayıtlı kullanıcı adı ve Gmail adresinizi girin. E-postanıza 6 haneli bir onay kodu göndereceğiz.
+        </p>
+        <div class="form-group">
+          <label class="form-label" for="forgotUsername">Kullanıcı Adı</label>
+          <input type="text" id="forgotUsername" class="form-input" placeholder="Kullanıcı adınızı girin" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="forgotEmail">Kayıtlı Gmail Adresi</label>
+          <input type="email" id="forgotEmail" class="form-input" placeholder="ornek@gmail.com" required autocomplete="email">
+        </div>
+        <button type="submit" id="btnSendForgotCode" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem; justify-content: center;">
+          <span>Doğrulama Kodu Gönder ⟶</span>
+        </button>
+      </form>
+
+      <!-- ADIM 2: E-POSTA ONAY KODU VE YENİ ŞİFRE GİRME -->
+      <form id="forgotStep2Form" style="display: none;">
+        <div style="background: rgba(67, 97, 238, 0.08); border: 1px solid rgba(67, 97, 238, 0.25); padding: 0.75rem 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem;">
+          <p style="font-size: 0.825rem; color: #cbd5e1;">
+            <strong id="forgotSentEmailText" style="color: #ffffff;"></strong> adresinize gönderilen 6 haneli onay kodunu girin.
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="forgotVerificationCode">6 Haneli Onay Kodu</label>
+          <input type="text" id="forgotVerificationCode" class="form-input" placeholder="123456" maxlength="6" style="font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; letter-spacing: 0.25em; text-align: center;" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="forgotNewPassword">Yeni Şifre</label>
+          <input type="password" id="forgotNewPassword" class="form-input" placeholder="Yeni güçlü şifreniz" required autocomplete="new-password">
+        </div>
+
+        <div class="password-requirements" id="forgotPasswordRequirements">
+          <div class="req-title">Şifre Güvenlik Gereksinimleri</div>
+          <div class="req-item invalid" id="forgot-req-length">• En az 8 karakter</div>
+          <div class="req-item invalid" id="forgot-req-upper">• En az bir büyük harf (A-Z)</div>
+          <div class="req-item invalid" id="forgot-req-lower">• En az bir küçük harf (a-z)</div>
+          <div class="req-item invalid" id="forgot-req-digit">• En az bir rakam (0-9)</div>
+          <div class="req-item invalid" id="forgot-req-special">• En az bir özel karakter (!@#$%^&* vb.)</div>
+        </div>
+
+        <button type="submit" id="btnVerifyAndReset" class="btn btn-primary" style="width: 100%; justify-content: center;">
+          <span>Şifreyi Doğrula & Sıfırla</span>
+        </button>
+        <p style="text-align: center; margin-top: 1rem; font-size: 0.825rem;">
+          <a href="#" id="btnBackToForgotStep1" style="color: var(--text-secondary); text-decoration: none;">
+            ← Bilgileri Değiştir
+          </a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 4: HESAP VE PROFİL AYARLARI
+       ========================================================= -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title">Hesap & Profil Ayarları</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="settingsForm">
+        <div class="form-group">
+          <label class="form-label" for="setUsername">Kullanıcı Adı</label>
+          <input type="text" id="setUsername" class="form-input" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="setEmail">Gmail / E-posta</label>
+            <input type="email" id="setEmail" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="setBirthDate">Doğum Tarihi</label>
+            <input type="text" id="setBirthDate" class="form-input" required>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border-subtle); margin: 1.25rem 0;"></div>
+
+        <div class="form-group">
+          <label class="form-label" for="setCurrentPassword">Mevcut Şifre (Doğrulama için)</label>
+          <input type="password" id="setCurrentPassword" class="form-input" placeholder="Mevcut şifreniz">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="setNewPassword">Yeni Şifre (Değiştirmek istemiyorsanız boş bırakın)</label>
+          <input type="password" id="setNewPassword" class="form-input" placeholder="Yeni şifre">
+        </div>
+
+        <div class="modal-form-actions">
+          <button type="button" class="btn btn-outline btn-modal-logout" id="modalLogoutBtn">
+            <i class="fa-regular fa-arrow-right-from-bracket" style="font-size: 0.85rem;"></i>
+            <span>Oturumu Kapat</span>
+          </button>
+          <button type="submit" class="btn btn-primary btn-modal-save">
+            <span>Değişiklikleri Kaydet</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 5: YENİ PLAN / RUTİN EKLE
+       ========================================================= -->
+  <div class="modal-overlay" id="addPlanModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <span id="addPlanModalTitle">Yeni Plan Ekle</span>
+        </h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="addPlanForm">
+        <div class="form-group">
+          <label class="form-label" for="planTitle">Plan / Rutin Başlığı</label>
+          <input type="text" id="planTitle" class="form-input" placeholder="Örn: Proje Toplantısı veya Egzersiz" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="planDate">Tarih</label>
+            <input type="date" id="planDate" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="planCategory">Kategori</label>
+            <select id="planCategory" class="form-select">
+              <option value="Genel">Genel</option>
+              <option value="Is">İş & Proje</option>
+              <option value="Saglik">Sağlık & Spor</option>
+              <option value="Egitim">Eğitim & Ders</option>
+              <option value="Kisisel">Kişisel</option>
+              <option value="Rutin">Günlük Rutin</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="planStartTime">Başlangıç Saati</label>
+            <input type="time" id="planStartTime" class="form-input" value="09:00" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="planEndTime">Bitiş Saati</label>
+            <input type="time" id="planEndTime" class="form-input" value="10:00">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+            <label class="form-label" style="margin-bottom: 0;">Hatırlatıcılar</label>
+            <button type="button" id="btnToggleCustomReminder" style="font-size: 0.775rem; color: #7dd3fc; background: none; border: none; cursor: pointer; text-decoration: underline; font-weight: 500;">
+              + Özel Hatırlatıcı Ekle
+            </button>
+          </div>
+
+          <!-- Onay Kutuları Listesi (Dinamik Checkbox Listesi) -->
+          <div class="reminder-options" id="remindersChecklist">
+            <!-- JavaScript (Calendar.renderRemindersChecklist) ile render edilir -->
+          </div>
+
+          <!-- KULLANICININ YENİ ÖZEL HATIRLATICI OLUŞTURMA ALANI -->
+          <div id="customRemindersContainer" style="display: none; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 0.75rem; margin-top: 0.5rem;">
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem;">
+              Özel Bildirim Süresi Belirleyin:
+            </div>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <input type="number" id="customRemindVal" class="form-input" value="15" min="1" max="100" style="width: 75px; padding: 0.4rem 0.6rem; font-size: 0.85rem; text-align: center;">
+              <select id="customRemindUnit" class="form-select" style="flex: 1; padding: 0.4rem 0.6rem; font-size: 0.85rem;">
+                <option value="dakika">Dakika Önce</option>
+                <option value="saat">Saat Önce</option>
+                <option value="gun">Gün Önce</option>
+                <option value="hafta">Hafta Önce</option>
+              </select>
+              <button type="button" id="btnAddCustomReminder" class="btn btn-outline btn-sm" style="padding: 0.4rem 0.85rem; font-size: 0.8rem; white-space: nowrap;">
+                + Listeye Ekle
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-outline modal-cancel">İptal</button>
+          <button type="submit" class="btn btn-primary" id="btnSubmitPlan">
+            <span>Kaydet & Sırala</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       YAN MENÜ ÇEKMECESİ (SIDE DRAWER / OFFCANVAS)
+       ========================================================= -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <aside class="side-drawer" id="sideMenuDrawer" aria-label="Kenar Menüsü">
+    <div class="drawer-header">
+      <div class="drawer-user-header" id="drawerUserHeader">
+        <div class="drawer-avatar" id="drawerAvatarText">U</div>
+        <div class="drawer-user-header-info">
+          <span class="drawer-username" id="drawerUsername">Misafir Kullanıcı</span>
+          <span class="drawer-user-status" id="drawerUserStatus">Giriş yapılmadı</span>
+        </div>
+      </div>
+      <button class="drawer-close-btn" id="btnCloseSideDrawer" aria-label="Menüyü Kapat">&times;</button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Günün Özeti Not Kağıdı (SADECE MOBİLDE GÖRÜNÜR, MASAÜSTÜNDE GİZLİ) -->
+      <div class="sidebar-widget sticky-note-paper drawer-sticky-note" id="drawerStickyNoteWidget" aria-label="Günün Özeti Not Kağıdı">
+        <div class="note-tape-pin"></div>
+        <div class="note-header-row">
+          <h3 class="note-title">Günün Özeti</h3>
+          <span class="note-date-tag" id="drawerNoteDateTag">Bugün</span>
+        </div>
+        <div class="note-todo-list" id="drawerNoteTodoList">
+          <!-- JavaScript ile bugünün planları render edilir -->
+        </div>
+      </div>
+      <!-- Menü Linkleri & Hızlı Kısayollar (Zarif Çizgi İkonlar) -->
+      <div class="drawer-nav-group">
+        <span class="drawer-group-title">İşlemler & Araçlar</span>
+        <button class="drawer-nav-item" id="drawerAiAssistantBtn" onclick="AIAssistant.openChat();">
+          <span class="nav-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </span>
+          <span>AI Rutin & Zaman Koçu</span>
+        </button>
+        <button class="drawer-nav-item" onclick="document.getElementById('openAddPlanBtn')?.click(); App.closeDrawer();">
+          <span class="nav-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+              <line x1="12" y1="14" x2="12" y2="18"></line>
+              <line x1="10" y1="16" x2="14" y2="16"></line>
+            </svg>
+          </span>
+          <span>Yeni Plan Ekle</span>
+        </button>
+        <button class="drawer-nav-item" onclick="document.getElementById('exportTxtBtn')?.click(); App.closeDrawer();">
+          <span class="nav-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="12" y1="18" x2="12" y2="12"></line>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+          </span>
+          <span>Planları TXT Olarak İndir</span>
+        </button>
+        <button class="drawer-nav-item" onclick="Auth.openSettingsModal(); App.closeDrawer();">
+          <span class="nav-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </span>
+          <span>Hesap ve Profil Ayarları</span>
+        </button>
+      </div>
+
+      <!-- Burç & İlham Kartı (Butonla Açılan) -->
+      <div class="drawer-horoscope-accordion" id="drawerHoroscopeBox">
+        <button type="button" class="drawer-horoscope-btn" id="btnToggleHoroscope">
+          <span style="display: flex; align-items: center; gap: 0.55rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+            </svg>
+            <span id="btnHoroscopeTitle">Günlük Burç Yorumunu Görüntüle</span>
+          </span>
+          <svg class="horoscope-chevron" id="horoscopeChevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div class="drawer-horoscope-body" id="drawerHoroscopeContent" style="display: none;">
+          <div class="drawer-quote-tag" id="drawerHoroscopeBadge">Günün İlhamı</div>
+          <p class="drawer-quote-text" id="drawerHoroscopeText">Zamanınızı sakinlikle planlayın, rutinlerinizi bir düzenle yönetin.</p>
+        </div>
+      </div>
+
+      <!-- Görünüm Teması (Açık - Switch - Koyu) -->
+      <div class="drawer-nav-group">
+        <span class="drawer-group-title">Görünüm Teması</span>
+        <div class="theme-switch-container">
+          <span class="theme-switch-label" id="labelThemeLight">Açık</span>
+          <label class="theme-toggle-switch" title="Temayı Değiştir">
+            <input type="checkbox" id="themeToggleCheckbox" checked>
+            <span class="theme-slider"></span>
+          </label>
+          <span class="theme-switch-label active" id="labelThemeDark">Koyu</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-footer">
+      <button class="btn btn-primary btn-sm" style="width: 100%; justify-content: center;" onclick="App.handleDrawerAuthBtn();" id="drawerAuthActionBtn">
+        <span>Oturum Aç</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- =========================================================
+       YÜZEN AI ASİSTAN BUTONU (FLOATING FAB)
+       ========================================================= -->
+  <button class="fab-ai-assistant" id="fabAiAssistantBtn" title="Routines AI Asistan" aria-label="AI Asistanı Aç">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+    <span class="fab-ai-text">AI Asistan</span>
+  </button>
+
+  <!-- =========================================================
+       MODAL: GÜN OPTİMİZASYON ÖNİZLEME (AI OPTIMIZE MODAL)
+       ========================================================= -->
+  <div class="modal-overlay" id="aiOptimizeModal">
+    <div class="modal-box ai-optimize-box">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="aiOptimizeDateTitle" style="font-size: 1.15rem;">
+            AI Gün Optimizasyonu
+          </h2>
+          <span style="font-size: 0.8rem; color: var(--text-secondary);">Çakışmalar giderildi ve dinlenme aralıkları entegre edildi.</span>
+        </div>
+        <button class="modal-close" id="closeAiOptimizeModal">&times;</button>
+      </div>
+
+      <div class="ai-optimize-summary" id="aiOptimizeSummary">
+        <!-- AI Analizi ve Önerileri -->
+      </div>
+
+      <div class="ai-optimize-plan-list" id="aiOptimizePlanList">
+        <!-- Optimize edilmiş planlar listelenir -->
+      </div>
+
+      <div class="ai-optimize-modal-footer">
+        <button type="button" class="btn btn-outline btn-sm" onclick="Auth.closeModal('aiOptimizeModal');">Vazgeç</button>
+        <button type="button" class="btn btn-primary btn-sm" id="btnApplyAiOptimization" style="flex: 1; justify-content: center;">
+          <span>Yeni Programı Takvime Uygula</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST BİLDİRİM KONTEYNERİ -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- JS KODLARI -->
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/calendar.js"></script>
+  <script src="/static/js/ai_assistant.js"></script>
+  <script src="/static/js/reminders.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
